@@ -184,7 +184,7 @@
         }
 
         .message {
-            height: calc(100% - 68px);
+            /*height: calc(100% - 68px);*/
             font-family: sans-serif;
         }
 
@@ -347,8 +347,8 @@
         <div class="head-section">
             <div class="headLeft-section">
                 <div class="headLeft-sub">
-                   
-                   
+
+
                 </div>
             </div>
             <div class="headRight-section">
@@ -361,7 +361,7 @@
             </div>
         </div>
         <div class="body-section">
-            <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
+            <div class="left-section ">
                 <ul>
                     <li class="active">
                         <div class="chatList">
@@ -379,61 +379,121 @@
             </div>
             <div class="right-section">
                 <div class="message mCustomScrollbar" data-mcs-theme="minimal-dark">
-                    <ul>
-                        <li class="msg-left">
-                            <div class="msg-left-sub">
-                                <img src="https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png">
-                                <div class="msg-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua.
-                                </div>
-                                <small>05:25 am</small>
-                            </div>
-                        </li>
-                        <li class="msg-right">
-                            <div class="msg-left-sub">
-                                <img src="https://asia.ifoam.bio/wp-content/uploads/2018/12/avatar__181424.png">
-                                <div class="msg-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua.
-                                </div>
-                                <small>05:25 am</small>
-                            </div>
-                        </li>
+                    <ul class="messages " style="overflow-y: scroll; height: 430px">
+                        
                         <li class="msg-day"><small>Wednesday</small></li>
-                        <li class="msg-left">
-                            <div class="msg-left-sub">
-                                <img src="https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png">
-                                <div class="msg-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                                </div>
-                                <small>05:25 am</small>
-                            </div>
-                        </li>
-                        <li class="msg-right">
-                            <div class="msg-left-sub">
-                                <img src="https://asia.ifoam.bio/wp-content/uploads/2018/12/avatar__181424.png">
-                                <div class="msg-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua.
-                                </div>
-                                <small>05:25 am</small>
-                            </div>
-                        </li> 
+                        
                     </ul>
                 </div>
                 <div class="right-section-bottom">
-                    <form> 
-                        <input type="text" name="" placeholder="type here...">
-                        <button class="btn-send"><i class="fa fa-send"></i></button>
+                    <form>
+                        <input type="text" name="" class="message_input" placeholder="type here...">
+                        <button class="btn-send send_message"><i class="fa fa-send"></i></button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <div class="message_template" style=" display: none; ">
+        <li class="message">
+            <div class="msg-left-sub">
+                <img class="avatar" id="avatar" src="">
+                <div class="msg-desc">
+                    <div class="text"></div>
+                </div>
+                <small>05:25 am</small>
+            </div>
+        </li>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- custom scrollbar plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    var Message;
+    function Message(arg) {
+        this.text = arg.text, this.message_side = arg.message_side, this.srcimg = arg.srcimg;
+        this.draw=function (_this) {
+            return function () {
+                var $message;
+                $message = $($('.message_template').clone().html());
+                console.log($message.find('#avatar'));
+                console.log(this.srcimg);
+                $message.find('#avatar').attr("src", this.srcimg);
+
+                $message.addClass(_this.message_side).find('.text').html(_this.text);
+                $('.messages').append($message);
+                return setTimeout(function () {
+                    return $message.addClass('appeared');
+                }
+                , 0);
+            }
+            ;
+        }
+        (this);
+        return this;
+    }
+
+        var getMessageText, message_side, srcimg, sendMessage;
+        message_side ='msg-left';
+        srcimg ='https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png';
+        function getMessageText() {
+            var $message_input;
+            $message_input=$('.message_input');
+            return $message_input.val();
+        }
+
+       function sendMessage (text) {
+            var $messages, message;
+            if (text.trim()==='') {
+                return;
+            }
+            $('.message_input').val('');
+           message_side = message_side === 'msg-right' ? 'msg-right' : 'msg-left';
+           srcimg = message_side === 'msg-left' ? 'https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png' : 'https://asia.ifoam.bio/wp-content/uploads/2018/12/avatar__181424.png';
+            message=new Message( {
+                text: text, message_side: message_side, srcimg:srcimg
+            }
+            );
+           message.draw();
+           var ht = 0;
+           $messages = $('.messages');
+
+           $(".messages li").each(function () {
+               ht += $(this).height();
+           });
+           return $messages.animate({ scrollTop: ht });
+        }
+
+        $('.send_message').click(function (e) {
+            e.preventDefault();
+
+            var question = getMessageText();
+            message_side = 'msg-right';
+            sendMessage(question);
+            $.ajax({
+                dataType: "Json",
+                type: "POST",
+                url: '@Url.Action("ReponseCaro", "Home")',
+                data: { Question: question },
+                success: function (data) {
+                    message_side = 'msg-left';
+                    sendMessage(data.answer);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown)
+                }
+
+            });
+        }
+        );
+        //$('.message_input').keyup(function (e) {
+        //    if (e.which===13) {
+        //        return sendMessage(getMessageText());
+        //    }
+        //}
+        //);
+        sendMessage('Hello i am caro! :)');
+
+    </script>
+
 </body>
 </html>

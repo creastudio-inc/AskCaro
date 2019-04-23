@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AskCaro.Models;
+using AskCaro.MachineLearning.DataStructures;
 
 namespace AskCaro.Controllers
 {
@@ -12,7 +13,14 @@ namespace AskCaro.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+           return View();
+        }
+        [HttpPost]
+        public JsonResult ReponseCaro(String Question)
+        {
+            ChatIssue issue = new ChatIssue() { Question = Question};
+            var test = AskCaro.MachineLearning.Program.BuildModel(AskCaro.MachineLearning.Program.ModelPath, issue);
+            return Json(new { Answer = test.Answer, More = test.More });
         }
 
         public IActionResult Privacy()

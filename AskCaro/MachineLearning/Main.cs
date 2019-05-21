@@ -27,14 +27,6 @@ namespace AskCaro.MachineLearning
         public static string ModelPath = GetAbsolutePath(ModelRelativePath);
         public enum MyTrainerStrategy : int { SdcaMultiClassTrainer = 1, OVAAveragedPerceptronTrainer = 2 };
 
-        //public static async Task Main()
-        //{
-        //    //  DataTable table = AskCaro_console.CsvFile.DataTableExtensions.GetTable();
-        //    //  table.WriteToCsvFile(DataSetLocation);
-        //    //  TrainModel(DataSetLocation, DataSetLocation, MyTrainerStrategy.SdcaMultiClassTrainer);
-        //    ChatIssue issue = new ChatIssue() { Question = "Thank you!", Answer = "" };
-        //    var test = BuildModel(ModelPath, issue);
-        //}
         public static void TrainModel(string DataSetLocation, string ModelPath, MyTrainerStrategy selectedStrategy)
         {
             Microsoft.ML.MLContext mlContext = new MLContext(seed: 1);

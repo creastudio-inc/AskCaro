@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AskCaro_console", "AskCaro_console\AskCaro_console.csproj", "{63C6CB3F-2101-4CCB-9300-830697BA2527}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskCaro", "AskCaro\AskCaro.csproj", "{A114530B-9F85-40BC-AB4A-E54C9206E011}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AskCaro", "AskCaro\AskCaro.csproj", "{A114530B-9F85-40BC-AB4A-E54C9206E011}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskCaro_stackoverflow", "AskCaro_stackoverflow\AskCaro_stackoverflow.csproj", "{9B0F307E-DA8A-42C4-97B8-2771050CD6B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A114530B-9F85-40BC-AB4A-E54C9206E011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A114530B-9F85-40BC-AB4A-E54C9206E011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A114530B-9F85-40BC-AB4A-E54C9206E011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B0F307E-DA8A-42C4-97B8-2771050CD6B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0F307E-DA8A-42C4-97B8-2771050CD6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0F307E-DA8A-42C4-97B8-2771050CD6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0F307E-DA8A-42C4-97B8-2771050CD6B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

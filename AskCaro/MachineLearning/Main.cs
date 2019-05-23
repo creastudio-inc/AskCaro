@@ -15,11 +15,11 @@ namespace AskCaro.MachineLearning
 {
     public static class Program
     {
-        private static string AppPath => @"C:\Users\AhmedOumezzine\source\repos\creastudio-inc\AskCaro\AskCaro\MachineLearning\";
+        private static string AppPath => @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\";
 
         private static string BaseDatasetsRelativePath = $@"{AppPath}/Data";
         // private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/corefx-issues-train.tsv";
-        private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/MyDataTable.csv";
+        private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/people.csv";
         private static string DataSetLocation = GetAbsolutePath(DataSetRelativePath);
 
         private static string BaseModelsRelativePath = $@"{AppPath}/MLModels";
@@ -27,14 +27,20 @@ namespace AskCaro.MachineLearning
         public static string ModelPath = GetAbsolutePath(ModelRelativePath);
         public enum MyTrainerStrategy : int { SdcaMultiClassTrainer = 1, OVAAveragedPerceptronTrainer = 2 };
 
+        public static void train()
+        {
+            AskCaro.MachineLearning.Program.TrainModel(AskCaro.MachineLearning.Program.DataSetLocation, AskCaro.MachineLearning.Program.DataSetLocation, MyTrainerStrategy.SdcaMultiClassTrainer);
+        }
+
         public static void TrainModel(string DataSetLocation, string ModelPath, MyTrainerStrategy selectedStrategy)
         {
             Microsoft.ML.MLContext mlContext = new MLContext(seed: 1);
-            var trainingDataView = mlContext.Data.LoadFromTextFile<ChatIssue>(DataSetLocation, hasHeader: true, separatorChar: '\t', allowSparse: false);
-            var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: DefaultColumnNames.Label, inputColumnName: nameof(ChatIssue.Answer))
-                            .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "TitleFeaturized", inputColumnName: nameof(ChatIssue.Question)))
-                          .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized", inputColumnName: nameof(ChatIssue.More)))
-                            .Append(mlContext.Transforms.Concatenate(outputColumnName: DefaultColumnNames.Features, "TitleFeaturized", "DescriptionFeaturized"))
+            var trainingDataView = mlContext.Data.LoadFromTextFile<QuestionsIssue>(DataSetLocation, hasHeader: true, separatorChar: ',', allowSparse: false);
+            var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: DefaultColumnNames.Label, inputColumnName: nameof(QuestionsIssue.answer))
+                            .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "TitleFeaturized", inputColumnName: nameof(QuestionsIssue.Title)))
+                          .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized", inputColumnName: nameof(QuestionsIssue.LongDescription)))
+                          .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized2", inputColumnName: nameof(QuestionsIssue.ShortDescription)))
+                            .Append(mlContext.Transforms.Concatenate(outputColumnName: DefaultColumnNames.Features, "TitleFeaturized", "DescriptionFeaturized","DescriptionFeaturized2"))
                             .AppendCacheCheckpoint(mlContext);
             // Use in-memory cache for small/medium datasets to lower training time. 
             // Do NOT use it (remove .AppendCacheCheckpoint()) when handling very large datasets.
@@ -73,7 +79,7 @@ namespace AskCaro.MachineLearning
 
         }
 
-        public static ChatIssuePrediction BuildModel(string ModelPath, ChatIssue issue)
+        public static QuestionsIssuePrediction BuildModel(string ModelPath, QuestionsIssue issue)
         {
             Microsoft.ML.MLContext mlContext = new MLContext(seed: 1);
             ITransformer trainedModel;
@@ -81,7 +87,7 @@ namespace AskCaro.MachineLearning
             {
                 trainedModel = mlContext.Model.Load(stream);
             }
-            var predEngine = trainedModel.CreatePredictionEngine<ChatIssue, ChatIssuePrediction>(mlContext);
+            var predEngine = trainedModel.CreatePredictionEngine<QuestionsIssue, QuestionsIssuePrediction>(mlContext);
             var prediction = predEngine.Predict(issue);
             return prediction;
         }

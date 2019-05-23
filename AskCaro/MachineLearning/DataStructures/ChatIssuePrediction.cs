@@ -15,4 +15,11 @@ namespace AskCaro.MachineLearning.DataStructures
         public string More;
 
     }
+
+    public class QuestionsIssuePrediction
+    {
+        [ColumnName("PredictedLabel")]
+
+        public string answer { get; set; }
+    }
 }

@@ -26,4 +26,18 @@ namespace AskCaro.MachineLearning.DataStructures
         [LoadColumn(4)]
         public DateTime Created;
     }
+
+
+
+    public class QuestionsIssue
+    {
+        [LoadColumn(0)]
+        public string Title { get; set; }
+        [LoadColumn(1)]
+        public string ShortDescription { get; set; }
+        [LoadColumn(2)]
+        public string LongDescription { get; set; }
+        [LoadColumn(3)]
+        public string answer { get; set; }
+    }
 }

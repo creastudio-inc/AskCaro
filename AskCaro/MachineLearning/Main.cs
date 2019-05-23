@@ -15,7 +15,7 @@ namespace AskCaro.MachineLearning
 {
     public static class Program
     {
-        private static string AppPath => @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\";
+        private static string AppPath => @"C:\Users\AhmedOumezzine\Source\Repos\creastudio-inc\AskCaro\AskCaro\MachineLearning\";
 
         private static string BaseDatasetsRelativePath = $@"{AppPath}/Data";
         // private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/corefx-issues-train.tsv";
@@ -25,11 +25,11 @@ namespace AskCaro.MachineLearning
         private static string BaseModelsRelativePath = $@"{AppPath}/MLModels";
         private static string ModelRelativePath = $"{BaseModelsRelativePath}/GitHubLabelerModel.zip";
         public static string ModelPath = GetAbsolutePath(ModelRelativePath);
-        public enum MyTrainerStrategy : int { SdcaMultiClassTrainer = 1, OVAAveragedPerceptronTrainer = 2 };
+        public enum MyTrainerStrategy : int { SdcaMultiClassTrainer = 1, OVAAveragedPerceptronTrainer = 2 , FastTree =3};
 
         public static void train()
         {
-            AskCaro.MachineLearning.Program.TrainModel(AskCaro.MachineLearning.Program.DataSetLocation, AskCaro.MachineLearning.Program.DataSetLocation, MyTrainerStrategy.SdcaMultiClassTrainer);
+            AskCaro.MachineLearning.Program.TrainModel(AskCaro.MachineLearning.Program.DataSetLocation, AskCaro.MachineLearning.Program.ModelPath, MyTrainerStrategy.SdcaMultiClassTrainer);
         }
 
         public static void TrainModel(string DataSetLocation, string ModelPath, MyTrainerStrategy selectedStrategy)
@@ -37,11 +37,9 @@ namespace AskCaro.MachineLearning
             Microsoft.ML.MLContext mlContext = new MLContext(seed: 1);
             var trainingDataView = mlContext.Data.LoadFromTextFile<QuestionsIssue>(DataSetLocation, hasHeader: true, separatorChar: ',', allowSparse: false);
             var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: DefaultColumnNames.Label, inputColumnName: nameof(QuestionsIssue.answer))
-                            .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "TitleFeaturized", inputColumnName: nameof(QuestionsIssue.Title)))
                           .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized", inputColumnName: nameof(QuestionsIssue.LongDescription)))
-                          .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized2", inputColumnName: nameof(QuestionsIssue.ShortDescription)))
-                            .Append(mlContext.Transforms.Concatenate(outputColumnName: DefaultColumnNames.Features, "TitleFeaturized", "DescriptionFeaturized","DescriptionFeaturized2"))
-                            .AppendCacheCheckpoint(mlContext);
+                            .Append(mlContext.Transforms.Concatenate(outputColumnName: DefaultColumnNames.Features, "DescriptionFeaturized"))
+                            ; //.AppendCacheCheckpoint(mlContext);
             // Use in-memory cache for small/medium datasets to lower training time. 
             // Do NOT use it (remove .AppendCacheCheckpoint()) when handling very large datasets.
 
@@ -65,6 +63,9 @@ namespace AskCaro.MachineLearning
 
                         break;
                     }
+                case MyTrainerStrategy.FastTree:
+                    trainer = mlContext.BinaryClassification.Trainers.FastTree();
+                    break;
                 default:
                     break;
             }

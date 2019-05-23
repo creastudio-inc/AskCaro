@@ -14,7 +14,7 @@ namespace AskCaro.Controllers
     {
         public IActionResult Index()
         {
-            //AskCaro.MachineLearning.Program.train();
+            AskCaro.MachineLearning.Program.train();
             return View();
         }
         [HttpPost]

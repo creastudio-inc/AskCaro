@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -74,39 +75,37 @@ namespace AskCaro.Controllers
         public IActionResult test()
         {
             var Questionslist = _dbContext.Questions.Include(c => c.Tags).Include(c=>c.Answers);
-            var Questions = new List<Questions>();
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Title");
+            dataTable.Columns.Add("LongDescription");
+            dataTable.Columns.Add("answer");
             foreach (var item in Questionslist)
             {
-                Questions question = new Questions();
-                question.Title = item.Title;
-                question.ShortDescription = item.ShortDescription;
-                question.LongDescription = item.LongDescription;
-                foreach(var answer in item.Answers)
+                if (item.Answers.Count > 0)
                 {
-                    question.answer = answer.Description;
+                    DataRow row = dataTable.NewRow();
+                    row["Title"] = item.Title;
+                    row["LongDescription"] = item.LongDescription.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace("    ", string.Empty);
+                    row["answer"] = item.Answers.FirstOrDefault().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace("    ", string.Empty);
+                    dataTable.Rows.Add(row);
                 }
-                Questions.Add(question);
+              
             }
-            WriteCSV(Questions, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\people.csv");
+            CreateCSV(dataTable, @"C:\Users\AhmedOumezzine\Source\Repos\creastudio-inc\AskCaro\AskCaro\MachineLearning\Data\people.csv");
             return View();
         }
 
 
-        public void WriteCSV<T>(IEnumerable<T> items, string path)
+        public void CreateCSV(DataTable dataTable, string filePath, string delimiter = ",")
         {
-            Type itemType = typeof(T);
-            var props = itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                .OrderBy(p => p.Name);
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                throw new DirectoryNotFoundException($"Destination folder not found: {filePath}");
 
-            using (var writer = new StreamWriter(path))
-            {
-                writer.WriteLine(string.Join(", ", props.Select(p => p.Name)));
+            var columns = dataTable.Columns.Cast<DataColumn>().ToArray();
 
-                foreach (var item in items)
-                {
-                    writer.WriteLine(string.Join(", ", props.Select(p => p.GetValue(item, null))));
-                }
-            }
+            var lines = (new[] { string.Join(delimiter, columns.Select(c => c.ColumnName)) })
+              .Union(dataTable.Rows.Cast<DataRow>().Select(row => string.Join(delimiter, columns.Select(c => row[c]))));
+          System.IO.File.WriteAllLines(filePath, lines);
         }
     }
 }

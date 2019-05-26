@@ -26,4 +26,11 @@
     <ProjectReference Include="..\AskCaro_stackoverflow\AskCaro_stackoverflow.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Reference Include="Lucene.Net">
+      <HintPath>Lucene.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

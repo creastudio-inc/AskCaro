@@ -4,9 +4,12 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using AskCaro.Data;
 using AskCaro.Models;
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -71,6 +74,61 @@ namespace AskCaro.Controllers
             return View();
         }
 
+        public abstract class AnalyzerView
+        {
+            public abstract string Name { get; }
+
+            public virtual string GetView(TokenStream tokenStream, out int numberOfTokens)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                Token token = tokenStream.Next();
+
+                numberOfTokens = 0;
+
+                while (token != null)
+                {
+                    numberOfTokens++;
+                    sb.Append(GetTokenView(token));
+                    token = tokenStream.Next();
+                }
+
+                return sb.ToString();
+            }
+
+            protected abstract string GetTokenView(Token token);
+        }
+
+        public class TermAnalyzerView : AnalyzerView
+        {
+            public override string Name
+            {
+                get { return "Terms"; }
+            }
+
+            protected override string GetTokenView(Token token)
+            {
+                return  token.TermText() +" ";
+            }
+        }
+
+        public string GetTag(string text)
+        {
+            StandardAnalyzer analyzer = new StandardAnalyzer();
+
+            int termCounter = 0;
+  
+                StringBuilder sb = new StringBuilder();
+
+                AnalyzerView view = new TermAnalyzerView();
+
+                StringReader stringReader = new StringReader(text);
+
+                TokenStream tokenStream = analyzer.TokenStream("defaultFieldName", stringReader);
+
+                var Text = view.GetView(tokenStream, out termCounter).Trim();
+            return Text;
+        }
 
         public IActionResult test()
         {
@@ -84,18 +142,25 @@ namespace AskCaro.Controllers
                 if (item.Answers.Count > 0)
                 {
                     DataRow row = dataTable.NewRow();
-                    row["Title"] = item.Title;
-                    row["LongDescription"] = item.LongDescription.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace("    ", string.Empty);
-                    row["answer"] = item.Answers.FirstOrDefault().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace("    ", string.Empty);
+                    var result = GetTag(item.Title);
+                    row["Title"] = result;             
+                    result = GetTag(item.LongDescription.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty));
+                    row["LongDescription"] = result;
+                 row["answer"] = item.Answers.FirstOrDefault().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty);
                     dataTable.Rows.Add(row);
                 }
               
             }
-            CreateCSV(dataTable, @"C:\Users\AhmedOumezzine\Source\Repos\creastudio-inc\AskCaro\AskCaro\MachineLearning\Data\people.csv");
+            CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\people.csv");
             return View();
         }
 
 
+        public IActionResult test2()
+        {
+            AskCaro.MachineLearning.Program.train();
+            return View();
+        }
         public void CreateCSV(DataTable dataTable, string filePath, string delimiter = ",")
         {
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))

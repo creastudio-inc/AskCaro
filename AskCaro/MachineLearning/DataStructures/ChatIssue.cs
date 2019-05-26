@@ -34,10 +34,8 @@ namespace AskCaro.MachineLearning.DataStructures
         [LoadColumn(0)]
         public string Title { get; set; }
         [LoadColumn(1)]
-        public string ShortDescription { get; set; }
-        [LoadColumn(2)]
         public string LongDescription { get; set; }
-        [LoadColumn(3)]
+        [LoadColumn(2)]
         public string answer { get; set; }
     }
 }

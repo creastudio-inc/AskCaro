@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AskCaro_console", "AskCaro_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AskCaro", "AskCaro\AskCaro.csproj", "{A114530B-9F85-40BC-AB4A-E54C9206E011}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskCaro_stackoverflow", "AskCaro_stackoverflow\AskCaro_stackoverflow.csproj", "{9B0F307E-DA8A-42C4-97B8-2771050CD6B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AskCaro_QuestionnaireAspirateur", "AskCaro_stackoverflow\AskCaro_QuestionnaireAspirateur.csproj", "{9B0F307E-DA8A-42C4-97B8-2771050CD6B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,13 +17,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.ML" Version="0.11.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.ML" Version="1.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <ProjectReference Include="..\AskCaro_stackoverflow\AskCaro_stackoverflow.csproj" />
+    <ProjectReference Include="..\AskCaro_stackoverflow\AskCaro_QuestionnaireAspirateur.csproj" />
   </ItemGroup>
 
 

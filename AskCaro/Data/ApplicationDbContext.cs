@@ -11,7 +11,6 @@ namespace AskCaro.Data
     {
 
         public DbSet<QuestionModel> Questions { get; set; }
-        public DbSet<TagModel> Tags { get; set; }
         public DbSet<AnswerModel> Answers { get; set; }
 
 

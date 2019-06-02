@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AskCaro.Data.Migrations
+namespace AskCaro.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -24,9 +24,13 @@ namespace AskCaro.Data.Migrations
                     b.Property<Guid>("AnswerId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Htmldescription");
 
                     b.Property<Guid?>("QuestionModelQuestionId");
+
+                    b.Property<string>("Textdescription");
+
+                    b.Property<int>("voteCount");
 
                     b.HasKey("AnswerId");
 
@@ -40,33 +44,21 @@ namespace AskCaro.Data.Migrations
                     b.Property<Guid>("QuestionId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("HtmlAnswers");
+
+                    b.Property<string>("HtmlDescription");
+
                     b.Property<string>("LinkHref");
 
-                    b.Property<string>("LongDescription");
+                    b.Property<int>("Similar");
 
-                    b.Property<string>("ShortDescription");
+                    b.Property<string>("TextDescription");
 
                     b.Property<string>("Title");
 
                     b.HasKey("QuestionId");
 
                     b.ToTable("Question");
-                });
-
-            modelBuilder.Entity("AskCaro.Models.TagModel", b =>
-                {
-                    b.Property<Guid>("TagId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("QuestionModelQuestionId");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("TagId");
-
-                    b.HasIndex("QuestionModelQuestionId");
-
-                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -236,15 +228,8 @@ namespace AskCaro.Data.Migrations
 
             modelBuilder.Entity("AskCaro.Models.AnswerModel", b =>
                 {
-                    b.HasOne("AskCaro.Models.QuestionModel", "QuestionModel")
-                        .WithMany()
-                        .HasForeignKey("QuestionModelQuestionId");
-                });
-
-            modelBuilder.Entity("AskCaro.Models.TagModel", b =>
-                {
-                    b.HasOne("AskCaro.Models.QuestionModel", "QuestionModel")
-                        .WithMany()
+                    b.HasOne("AskCaro.Models.QuestionModel")
+                        .WithMany("Answers")
                         .HasForeignKey("QuestionModelQuestionId");
                 });
 

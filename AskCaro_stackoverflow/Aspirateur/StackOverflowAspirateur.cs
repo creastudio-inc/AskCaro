@@ -1,35 +1,24 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
-namespace AskCaro_stackoverflow
+namespace AskCaro_QuestionnaireAspirateur
 {
-    public static class Property
+    public class StackOverflowAspirateur
     {
- 
-    }
-    public class stackoverflow
-    {
-        public string title {get;set;}
-        public string hreflink {get;set;}
-        public string shortdescript {get;set;}
-        public List<string> tags { get; set; }
-    }
-    public class Main
-    {
-        public List<stackoverflow> Start(int i)
+        public List<stackoverflowModel> Start(int i)
         {
-            var doc = new HtmlWeb().Load("https://stackoverflow.com/questions/tagged/asp.net-mvc-4?sort=votes&page=" + i+"&pagesize=15");
-            List<stackoverflow> stackoverflow = new List<stackoverflow>();
+            var url = String.Format(URLTags.StackOverflow, "asp.net-mvc-4", "15",i);
+            var doc = new HtmlWeb().Load(url);
+            List<stackoverflowModel> stackoverflow = new List<stackoverflowModel>();
             var summary = doc.DocumentNode.SelectNodes("//div[@class='summary']");
             if (summary != null)
-            {
-
-            
+            {        
             foreach (HtmlNode link in summary)
             {
-                stackoverflow stflow = new stackoverflow();
+                    stackoverflowModel stflow = new stackoverflowModel();
                 foreach (var node in link.ChildNodes)
                 {                  
                     if (node.Name == "h3")
@@ -44,21 +33,7 @@ namespace AskCaro_stackoverflow
                         }
                         stflow.title = node.InnerText;
                     }
-                    if (node.Name == "div")
-                    {
-                        foreach (var att in node.Attributes)
-                        {
-                            if (att.Name == "class" && att.Value== "excerpt")
-                            {
-                                stflow.shortdescript = node.InnerHtml;
-                            }
-
-                            if ( att.Value.Contains("tags"))
-                            {
-                                stflow.tags = GetTag(node.ChildNodes);
-                            }
-                        }
-                    }
+                   
                 }
                 stackoverflow.Add(stflow);
             }
@@ -76,9 +51,7 @@ namespace AskCaro_stackoverflow
             }
             catch(Exception ex) {
                 return "0";
-            }
-        
-              
+            }          
         }
 
         private List<string> GetTag(HtmlNodeCollection childNodes)
@@ -94,7 +67,6 @@ namespace AskCaro_stackoverflow
             return tag;
         }
 
-
         public string GetDescrip(String link)
         {
             var doc = new HtmlWeb().Load(link);
@@ -107,6 +79,18 @@ namespace AskCaro_stackoverflow
             }
  
          }
+        public string GetDescripHtml(String link)
+        {
+            var doc = new HtmlWeb().Load(link);
+            var question = doc.DocumentNode.SelectNodes("//div[@class='postcell post-layout--right']//div[@class='post-text']");
+            if (question != null && question.Count > 0)
+                return question[0].InnerHtml;
+            else
+            {
+                return " ";
+            }
+
+        }
         public List<string> Getanswers(String link)
         {
             List<string> ans = new List<string>();
@@ -122,6 +106,44 @@ namespace AskCaro_stackoverflow
             
             return ans;
          }
+
+        public List<stackoverfloAnswerswModel> GetBestanswers(String link)
+        {
+            List<stackoverfloAnswerswModel> ans = new List<stackoverfloAnswerswModel>();
+            var doc = new HtmlWeb().Load(link);
+            var answers = doc.DocumentNode.SelectNodes("//div[@id='answers']//div[contains(@class,'answer')]//div[@class='post-layout']");
+            if (answers != null)
+            {
+                foreach (HtmlNode answer in answers)
+                {
+                    stackoverfloAnswerswModel stackoverfloAnswerswModel = new stackoverfloAnswerswModel();
+                    foreach( var child in answer.ChildNodes)
+                    {
+                        if (child.Name == "div")
+                        {
+                            foreach(var att in child.Attributes)
+                            {
+                                if(att.Name=="class" && att.Value== "answercell post-layout--right")
+                                {
+                                    stackoverfloAnswerswModel.Htmldescription = child.InnerHtml;
+                                    stackoverfloAnswerswModel.Textdescription = child.InnerText.Replace("\r\n", "");
+                                }
+
+                                if (att.Name=="class" && att.Value== "votecell post-layout--left")
+                                {
+                                    stackoverfloAnswerswModel.voteCount = Int32.Parse(child.InnerText.Replace("\r\n","").Replace(" ", "").Replace("+", ""));
+                                }
+                            }
+                        }
+                    }
+                    if(stackoverfloAnswerswModel.Textdescription!=null)
+                        ans.Add(stackoverfloAnswerswModel);
+
+
+                }
+            }
+                return ans;
+        }
 
     }
 }

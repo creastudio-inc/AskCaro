@@ -10,6 +10,7 @@ using Microsoft.ML.Data;
 using static Microsoft.ML.TrainCatalogBase;
 using System.Data;
 using AskCaro_console.CsvFile;
+using static Microsoft.ML.DataOperationsCatalog;
 
 namespace AskCaro.MachineLearning
 {
@@ -19,7 +20,7 @@ namespace AskCaro.MachineLearning
 
         private static string BaseDatasetsRelativePath = $@"{AppPath}Data";
         // private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/corefx-issues-train.tsv";
-        private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/people.csv";
+        private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/peopletrain.csv";
         private static string DataSetLocation = GetAbsolutePath(DataSetRelativePath);
 
         private static string BaseModelsRelativePath = $@"{AppPath}\MLModels";
@@ -36,59 +37,49 @@ namespace AskCaro.MachineLearning
         {
             Microsoft.ML.MLContext mlContext = new MLContext(seed: 1);
             var trainingDataView = mlContext.Data.LoadFromTextFile<QuestionsIssue>(DataSetLocation, hasHeader: true, separatorChar: ',', allowSparse: false);
-            var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: DefaultColumnNames.Label, inputColumnName: nameof(QuestionsIssue.answer))
-                          .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "TitleFeaturized", inputColumnName: nameof(QuestionsIssue.Title)))
-                          .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized", inputColumnName: nameof(QuestionsIssue.LongDescription)))
-                            .Append(mlContext.Transforms.Concatenate(outputColumnName: DefaultColumnNames.Features, "TitleFeaturized", "DescriptionFeaturized"))
-                            .AppendCacheCheckpoint(mlContext);
-            // Use in-memory cache for small/medium datasets to lower training time. 
-            // Do NOT use it (remove .AppendCacheCheckpoint()) when handling very large datasets.
+
+            TrainTestData trainTestSplit = mlContext.Data.TrainTestSplit(trainingDataView, testFraction: 0.2);
+            IDataView trainingData = trainTestSplit.TrainSet;
+            IDataView testData = trainTestSplit.TestSet;
+
+            var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "Label", inputColumnName: nameof(QuestionsIssue.answer))
+                         .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized", inputColumnName: nameof(QuestionsIssue.LongDescription)))
+                           .Append(mlContext.Transforms.Concatenate(outputColumnName: "Features", "DescriptionFeaturized"))
+                           .AppendCacheCheckpoint(mlContext);
 
             IEstimator<ITransformer> trainer = null;
             switch (selectedStrategy)
             {
                 case MyTrainerStrategy.SdcaMultiClassTrainer:
-                    trainer = mlContext.MulticlassClassification.Trainers.StochasticDualCoordinateAscent(DefaultColumnNames.Label,DefaultColumnNames.Features);
-                    break;
-                case MyTrainerStrategy.OVAAveragedPerceptronTrainer:
-                    {
-                        // Create a binary classification trainer.
-                        var averagedPerceptronBinaryTrainer = mlContext.BinaryClassification.Trainers.AveragedPerceptron(DefaultColumnNames.Label,
-                                                                                                                         DefaultColumnNames.Features, numIterations: 10);
-                        // Compose an OVA (One-Versus-All) trainer with the BinaryTrainer.
-                        // In this strategy, a binary classification algorithm is used to train one classifier for each class, "
-                        // which distinguishes that class from all other classes. Prediction is then performed by running these binary classifiers, "
-                        // and choosing the prediction with the highest confidence score.
-                        trainer = mlContext.MulticlassClassification.Trainers.OneVersusAll(averagedPerceptronBinaryTrainer);
-
-                        break;
-                    }
-                case MyTrainerStrategy.FastTree:
-                    trainer = mlContext.BinaryClassification.Trainers.FastTree();
+                    trainer = mlContext.MulticlassClassification.Trainers.SdcaNonCalibrated("Label","Features");
                     break;
                 default:
                     break;
             }
 
-            var trainingPipeline = dataProcessPipeline.Append(trainer).Append(mlContext.Transforms.Conversion.MapKeyToValue(DefaultColumnNames.PredictedLabel));
+            var trainingPipeline = dataProcessPipeline.Append(trainer).Append(mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
 
             var trainedModel = trainingPipeline.Fit(trainingDataView);
+             
 
+            // STEP 5: Evaluate the model and show accuracy stats
+            var predictions = trainedModel.Transform(testData);
+            var metrics = mlContext.MulticlassClassification.Evaluate(data: predictions, labelColumnName: "Label", scoreColumnName: "Score");
 
-            using (var fs = new FileStream(ModelPath, FileMode.Create, FileAccess.Write, FileShare.Write))
-                mlContext.Model.Save(trainedModel, fs);
+            // STEP 6: Save/persist the trained model to a .ZIP file
+            mlContext.Model.Save(trainedModel, trainingData.Schema, ModelPath);
 
         }
 
         public static QuestionsIssuePrediction BuildModel(string ModelPath, QuestionsIssue issue)
         {
             Microsoft.ML.MLContext mlContext = new MLContext(seed: 1);
-            ITransformer trainedModel;
-            using (FileStream stream = new FileStream(ModelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                trainedModel = mlContext.Model.Load(stream);
-            }
-            var predEngine = trainedModel.CreatePredictionEngine<QuestionsIssue, QuestionsIssuePrediction>(mlContext);
+            //Define DataViewSchema for data preparation pipeline and trained model
+            DataViewSchema modelSchema;
+
+            // Load trained model
+            ITransformer trainedModel = mlContext.Model.Load(ModelPath, out modelSchema);
+            var predEngine = mlContext.Model.CreatePredictionEngine<QuestionsIssue, QuestionsIssuePrediction>(trainedModel);
             var prediction = predEngine.Predict(issue);
             return prediction;
         }

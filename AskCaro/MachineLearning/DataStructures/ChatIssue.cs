@@ -32,10 +32,10 @@ namespace AskCaro.MachineLearning.DataStructures
     public class QuestionsIssue
     {
         [LoadColumn(0)]
-        public string Title { get; set; }
+        public bool Label { get; set; }
         [LoadColumn(1)]
         public string LongDescription { get; set; }
         [LoadColumn(2)]
-        public string answer { get; set; }
+        public string answer { get; set; } 
     }
 }

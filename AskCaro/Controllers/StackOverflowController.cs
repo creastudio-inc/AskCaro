@@ -17,8 +17,6 @@ namespace AskCaro.Controllers
 {
 
     public class Questions {
-        public string Title {get;set;}
-        public string ShortDescription { get;set;}
         public string LongDescription { get;set;}
         public string answer { get;set;}
     }
@@ -35,128 +33,106 @@ namespace AskCaro.Controllers
 
         public IActionResult Index()
         {
-            AskCaro_stackoverflow.Main main = new AskCaro_stackoverflow.Main();
+            AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur main = new AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur();
             string countt = main.GetLastPageNumbers();
             int count = int.Parse(countt);
+            int simillar = 0;
             for (int i = 0; i < count; i++)
             {
                 var item = main.Start(i);
                 foreach (var x in item)
                 {
+                    List<QuestionModel> questionModels = new List<QuestionModel>();
+
                     QuestionModel questionModel = new QuestionModel();
                     questionModel.Title = x.title;
-                    questionModel.ShortDescription = x.shortdescript;
+                    questionModel.Similar = simillar;
                     questionModel.LinkHref = x.hreflink;
-                    questionModel.Tags = new List<TagModel>();
-                    foreach (var tag in x.tags)
-                    {
-                        TagModel tagModel = new TagModel();
-                        tagModel.Title = tag;
-                        questionModel.Tags.Add(tagModel);
-                    }
-                    questionModel.LongDescription = main.GetDescrip(x.hreflink);
-
+                    questionModel.TextDescription = main.GetDescrip(x.hreflink);
+                    questionModel.HtmlDescription = main.GetDescripHtml(x.hreflink);
                     questionModel.Answers = new List<AnswerModel>();
-
-                    foreach (var answers in main.Getanswers(x.hreflink))
+                    foreach (var answers in main.GetBestanswers(x.hreflink))
                     {
                         AnswerModel AnswerModel = new AnswerModel();
-                        AnswerModel.Description = answers;
+                        AnswerModel.Htmldescription = answers.Htmldescription;
+                        AnswerModel.Textdescription = answers.Textdescription;
+                        AnswerModel.voteCount = answers.voteCount;
                         questionModel.Answers.Add(AnswerModel);
                     }
-                    _dbContext.Questions.Add(questionModel);
+                    var maxZ = questionModel.Answers.Max(obj => obj.voteCount);
+
+                    questionModel.HtmlAnswers = questionModel.Answers.Where(obj => obj.voteCount == maxZ).FirstOrDefault().Htmldescription;
+
+                    // 
+                    questionModels.Add(questionModel);
+                    AskCaro_QuestionnaireAspirateur.GoogleAspirateur googleAspirateur = new AskCaro_QuestionnaireAspirateur.GoogleAspirateur();
+                   var listgoogle=  googleAspirateur.Start(x.title,x.hreflink, "stackoverflow.com");
+                    foreach(var google in listgoogle)
+                    {
+                        QuestionModel questionModelSimilar = new QuestionModel();
+                        questionModelSimilar.Title = google.Title;
+                        questionModelSimilar.Similar = simillar;
+                        questionModelSimilar.LinkHref = google.hreflink;
+                        questionModelSimilar.TextDescription = main.GetDescrip(google.hreflink);
+                        questionModelSimilar.HtmlDescription = main.GetDescrip(google.hreflink);
+                        questionModelSimilar.HtmlAnswers = questionModel.HtmlAnswers;
+                        questionModels.Add(questionModelSimilar);
+                    }
+                    simillar++;
+                    _dbContext.Questions.AddRange(questionModels);
                     var result = _dbContext.SaveChanges();
-                    System.Threading.Thread.Sleep(10000);
-
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
-
             return View();
         }
 
-        public abstract class AnalyzerView
-        {
-            public abstract string Name { get; }
+   
+ 
+        //public IActionResult test()
+        //{
+        //    var Questionslist = _dbContext.Questions.Include(c => c.Tags).Include(c=>c.Answers);
+        //    DataTable dataTable = new DataTable();
+        //    dataTable.Columns.Add("LongDescription");
+        //    dataTable.Columns.Add("answer");
+        //    foreach (var item in Questionslist)
+        //    {
+        //        if (item.Answers.Count > 0)
+        //        {
+        //            DataRow row = dataTable.NewRow();
+        //            var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
+        //            row["LongDescription"] = result;
+        //         row["answer"] = item.Answers.FirstOrDefault().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty);
+        //            dataTable.Rows.Add(row);
+        //        }            
+        //    }
+        //    CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\peopletrain.csv");
+        //    return View();
+        //}
 
-            public virtual string GetView(TokenStream tokenStream, out int numberOfTokens)
-            {
-                StringBuilder sb = new StringBuilder();
-
-                Token token = tokenStream.Next();
-
-                numberOfTokens = 0;
-
-                while (token != null)
-                {
-                    numberOfTokens++;
-                    sb.Append(GetTokenView(token));
-                    token = tokenStream.Next();
-                }
-
-                return sb.ToString();
-            }
-
-            protected abstract string GetTokenView(Token token);
-        }
-
-        public class TermAnalyzerView : AnalyzerView
-        {
-            public override string Name
-            {
-                get { return "Terms"; }
-            }
-
-            protected override string GetTokenView(Token token)
-            {
-                return  token.TermText() +" ";
-            }
-        }
-
-        public string GetTag(string text)
-        {
-            StandardAnalyzer analyzer = new StandardAnalyzer();
-
-            int termCounter = 0;
-  
-                StringBuilder sb = new StringBuilder();
-
-                AnalyzerView view = new TermAnalyzerView();
-
-                StringReader stringReader = new StringReader(text);
-
-                TokenStream tokenStream = analyzer.TokenStream("defaultFieldName", stringReader);
-
-                var Text = view.GetView(tokenStream, out termCounter).Trim();
-            return Text;
-        }
-
-        public IActionResult test()
-        {
-            var Questionslist = _dbContext.Questions.Include(c => c.Tags).Include(c=>c.Answers);
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("Title");
-            dataTable.Columns.Add("LongDescription");
-            dataTable.Columns.Add("answer");
-            foreach (var item in Questionslist)
-            {
-                if (item.Answers.Count > 0)
-                {
-                    DataRow row = dataTable.NewRow();
-                    var result = GetTag(item.Title);
-                    row["Title"] = result;             
-                    result = GetTag(item.LongDescription.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty));
-                    row["LongDescription"] = result;
-                 row["answer"] = item.Answers.FirstOrDefault().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty);
-                    dataTable.Rows.Add(row);
-                }
-              
-            }
-            CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\people.csv");
-            return View();
-        }
+        //public IActionResult test2()
+        //{
+        //    var Questionslist = _dbContext.Questions.Include(c => c.Tags).Include(c => c.Answers);
+        //    DataTable dataTable = new DataTable();
+        //    dataTable.Columns.Add("LongDescription");
+        //    dataTable.Columns.Add("answer");
+        //    foreach (var item in Questionslist)
+        //    {
+        //        if (item.Answers.Count > 0)
+        //        {
+        //            DataRow row = dataTable.NewRow();
+        //            var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
+        //            row["LongDescription"] = result;
+        //            row["answer"] = item.Answers.Last().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty);
+        //            dataTable.Rows.Add(row);
+        //        }
+        //    }
+        //    CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\peopletest.csv");
+        //    return View();
+        //}
 
 
-        public IActionResult test2()
+        public IActionResult train()
         {
             AskCaro.MachineLearning.Program.train();
             return View();

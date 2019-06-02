@@ -18,8 +18,11 @@ namespace AskCaro.MachineLearning.DataStructures
 
     public class QuestionsIssuePrediction
     {
-        [ColumnName("PredictedLabel")]
 
+        public float Probability { get; set; }
+        public float Score { get; set; }
+
+        [ColumnName("PredictedLabel")]
         public string answer { get; set; }
     }
 }

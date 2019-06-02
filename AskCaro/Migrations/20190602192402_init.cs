@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AskCaro.Data.Migrations
+namespace AskCaro.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,23 @@ namespace AskCaro.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Question",
+                columns: table => new
+                {
+                    QuestionId = table.Column<Guid>(nullable: false),
+                    Similar = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    HtmlDescription = table.Column<string>(nullable: true),
+                    TextDescription = table.Column<string>(nullable: true),
+                    LinkHref = table.Column<string>(nullable: true),
+                    HtmlAnswers = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Question", x => x.QuestionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +170,32 @@ namespace AskCaro.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Answer",
+                columns: table => new
+                {
+                    AnswerId = table.Column<Guid>(nullable: false),
+                    voteCount = table.Column<int>(nullable: false),
+                    Htmldescription = table.Column<string>(nullable: true),
+                    Textdescription = table.Column<string>(nullable: true),
+                    QuestionModelQuestionId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Answer", x => x.AnswerId);
+                    table.ForeignKey(
+                        name: "FK_Answer_Question_QuestionModelQuestionId",
+                        column: x => x.QuestionModelQuestionId,
+                        principalTable: "Question",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answer_QuestionModelQuestionId",
+                table: "Answer",
+                column: "QuestionModelQuestionId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -196,6 +239,9 @@ namespace AskCaro.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Answer");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -209,6 +255,9 @@ namespace AskCaro.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Question");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

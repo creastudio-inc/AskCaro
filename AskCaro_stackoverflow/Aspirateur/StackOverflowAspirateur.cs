@@ -125,8 +125,15 @@ namespace AskCaro_QuestionnaireAspirateur
                             {
                                 if(att.Name=="class" && att.Value== "answercell post-layout--right")
                                 {
-                                    stackoverfloAnswerswModel.Htmldescription = child.InnerHtml;
-                                    stackoverfloAnswerswModel.Textdescription = child.InnerText.Replace("\r\n", "");
+                                    foreach(var childd in child.ChildNodes)
+                                    {
+                                        if (childd.Attributes.Count > 1)
+                                        {
+                                            stackoverfloAnswerswModel.Htmldescription = childd.InnerHtml;
+                                            stackoverfloAnswerswModel.Textdescription = childd.InnerText.Replace("\r\n", "");
+                                        }
+                                    }
+                                 
                                 }
 
                                 if (att.Name=="class" && att.Value== "votecell post-layout--left")

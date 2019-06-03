@@ -87,28 +87,36 @@ namespace AskCaro.Controllers
             return View();
         }
 
-   
- 
-        //public IActionResult test()
-        //{
-        //    var Questionslist = _dbContext.Questions.Include(c => c.Tags).Include(c=>c.Answers);
-        //    DataTable dataTable = new DataTable();
-        //    dataTable.Columns.Add("LongDescription");
-        //    dataTable.Columns.Add("answer");
-        //    foreach (var item in Questionslist)
-        //    {
-        //        if (item.Answers.Count > 0)
-        //        {
-        //            DataRow row = dataTable.NewRow();
-        //            var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
-        //            row["LongDescription"] = result;
-        //         row["answer"] = item.Answers.FirstOrDefault().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty);
-        //            dataTable.Rows.Add(row);
-        //        }            
-        //    }
-        //    CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\peopletrain.csv");
-        //    return View();
-        //}
+
+
+        public IActionResult test()
+        {
+            var Questionslist = _dbContext.Questions;
+            var max = Questionslist.Max(x => x.Similar);
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Similar");
+            dataTable.Columns.Add("Question");
+            dataTable.Columns.Add("Answer");
+            for (int i = 0; i < max; i++)
+            {
+                var lists = Questionslist.Where(x => x.Similar == i);
+                foreach (var item in lists)
+                {
+                    if (!String.IsNullOrEmpty(item.TextDescription))
+                    {
+                        DataRow row = dataTable.NewRow();
+                        var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
+                        row["Question"] = result;
+                        row["Similar"] = item.Similar;
+                        row["Answer"] = "<div>"+item.HtmlAnswers.Replace("\n", string.Empty).Replace("\r", string.Empty) + "</div>";
+                        dataTable.Rows.Add(row);
+                    }
+                }
+            }
+            
+            CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\Questiontrain.csv", "\t");
+            return View();
+        }
 
         //public IActionResult test2()
         //{

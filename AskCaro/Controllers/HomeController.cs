@@ -29,9 +29,9 @@ namespace AskCaro.Controllers
         public JsonResult ReponseCaro(String Question)
         {
             string shorttag = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(Question);
-            QuestionsIssue issue = new QuestionsIssue() {  LongDescription = shorttag };
+            QuestionsIssue issue = new QuestionsIssue() {   Question = shorttag };
             var test = AskCaro.MachineLearning.Program.BuildModel(@"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\MLModels/GitHubLabelerModel.zip", issue);
-            return Json(new { Answer = test.answer });
+            return Json(new { Answer = test.Answer });
         }
 
         public IActionResult Privacy()

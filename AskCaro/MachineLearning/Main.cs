@@ -20,7 +20,7 @@ namespace AskCaro.MachineLearning
 
         private static string BaseDatasetsRelativePath = $@"{AppPath}Data";
         // private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/corefx-issues-train.tsv";
-        private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/peopletrain.csv";
+        private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/Questiontrain.csv";
         private static string DataSetLocation = GetAbsolutePath(DataSetRelativePath);
 
         private static string BaseModelsRelativePath = $@"{AppPath}\MLModels";
@@ -36,14 +36,14 @@ namespace AskCaro.MachineLearning
         public static void TrainModel(string DataSetLocation, string ModelPath, MyTrainerStrategy selectedStrategy)
         {
             Microsoft.ML.MLContext mlContext = new MLContext(seed: 1);
-            var trainingDataView = mlContext.Data.LoadFromTextFile<QuestionsIssue>(DataSetLocation, hasHeader: true, separatorChar: ',', allowSparse: false);
+            var trainingDataView = mlContext.Data.LoadFromTextFile<QuestionsIssue>(DataSetLocation, hasHeader: true, separatorChar: '\t', allowSparse: false);
 
             TrainTestData trainTestSplit = mlContext.Data.TrainTestSplit(trainingDataView, testFraction: 0.2);
             IDataView trainingData = trainTestSplit.TrainSet;
             IDataView testData = trainTestSplit.TestSet;
 
-            var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "Label", inputColumnName: nameof(QuestionsIssue.answer))
-                         .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized", inputColumnName: nameof(QuestionsIssue.LongDescription)))
+            var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "Label", inputColumnName: nameof(QuestionsIssue.Answer))
+                         .Append(mlContext.Transforms.Text.FeaturizeText(outputColumnName: "DescriptionFeaturized", inputColumnName: nameof(QuestionsIssue.Question)))
                            .Append(mlContext.Transforms.Concatenate(outputColumnName: "Features", "DescriptionFeaturized"))
                            .AppendCacheCheckpoint(mlContext);
 

@@ -16,7 +16,8 @@ namespace AskCaro.MachineLearning
 {
     public static class Program
     {
-        private static string AppPath => @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\";
+        //public static string AppPath = @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\";
+        public static string AppPath = @"D:\home\site\wwwroot\MachineLearning\";
 
         private static string BaseDatasetsRelativePath = $@"{AppPath}Data";
         // private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/corefx-issues-train.tsv";
@@ -27,7 +28,7 @@ namespace AskCaro.MachineLearning
         private static string ModelRelativePath = $"{BaseModelsRelativePath}/GitHubLabelerModel.zip";
         public static string ModelPath = GetAbsolutePath(ModelRelativePath);
         public enum MyTrainerStrategy : int { SdcaMultiClassTrainer = 1, OVAAveragedPerceptronTrainer = 2 , FastTree =3};
-
+ 
         public static void train()
         {
             AskCaro.MachineLearning.Program.TrainModel(AskCaro.MachineLearning.Program.DataSetLocation, AskCaro.MachineLearning.Program.ModelPath, MyTrainerStrategy.SdcaMultiClassTrainer);

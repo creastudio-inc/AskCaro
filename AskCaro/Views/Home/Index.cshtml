@@ -477,6 +477,7 @@
                 success: function (data) {
                     message_side = 'msg-left';
                     sendMessage(data.answer);
+                    $(".post-text").next().remove();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert(errorThrown)

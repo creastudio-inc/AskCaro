@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.ML" Version="1.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="YamlDotNet" Version="6.1.1" />
   </ItemGroup>
 
 

@@ -12,6 +12,8 @@ namespace AskCaro.Data
 
         public DbSet<QuestionModel> Questions { get; set; }
         public DbSet<AnswerModel> Answers { get; set; }
+        public DbSet<ConversationsModel> Conversations { get; set; }
+        public DbSet<CategoriesModel> Categories { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

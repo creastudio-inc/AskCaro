@@ -39,6 +39,40 @@ namespace AskCaro.Migrations
                     b.ToTable("Answer");
                 });
 
+            modelBuilder.Entity("AskCaro.Models.CategoriesModel", b =>
+                {
+                    b.Property<Guid>("categorieId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreaDate");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("categorieId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("AskCaro.Models.ConversationsModel", b =>
+                {
+                    b.Property<Guid>("ConversationsId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("CategoriescategorieId");
+
+                    b.Property<DateTime>("CreaDate");
+
+                    b.Property<string>("HtmlAnswers");
+
+                    b.Property<string>("Question");
+
+                    b.HasKey("ConversationsId");
+
+                    b.HasIndex("CategoriescategorieId");
+
+                    b.ToTable("Conversations");
+                });
+
             modelBuilder.Entity("AskCaro.Models.QuestionModel", b =>
                 {
                     b.Property<Guid>("QuestionId")
@@ -231,6 +265,13 @@ namespace AskCaro.Migrations
                     b.HasOne("AskCaro.Models.QuestionModel")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionModelQuestionId");
+                });
+
+            modelBuilder.Entity("AskCaro.Models.ConversationsModel", b =>
+                {
+                    b.HasOne("AskCaro.Models.CategoriesModel", "Categories")
+                        .WithMany()
+                        .HasForeignKey("CategoriescategorieId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

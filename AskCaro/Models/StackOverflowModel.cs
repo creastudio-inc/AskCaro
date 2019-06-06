@@ -32,4 +32,27 @@ namespace AskCaro.Models
         public string Textdescription { get; set; }
 
     }
+
+    [Table("Conversations")]
+    public class ConversationsModel
+    {
+        [Key]
+        public Guid ConversationsId { get; set; }
+        public string Question { get; set; }
+        public string HtmlAnswers { get; set; }
+        public DateTime CreaDate { get; set; }
+        public virtual CategoriesModel Categories { get; set; }
+
+    }
+
+    [Table("Categories")]
+    public class CategoriesModel
+    {
+        [Key]
+        public Guid categorieId { get; set; }
+        public string Name { get; set; }
+        public DateTime CreaDate { get; set; }
+
+    }
+
 }

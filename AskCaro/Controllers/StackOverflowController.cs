@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -12,6 +13,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YamlDotNet.Serialization;
 
 namespace AskCaro.Controllers
 {
@@ -100,12 +102,66 @@ namespace AskCaro.Controllers
 
         public IActionResult test()
         {
-            var Questionslist = _dbContext.Questions;
-            var max = Questionslist.Max(x => x.Similar);
+            var Questionslist = _dbContext.Conversations;
             DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("Similar");
             dataTable.Columns.Add("Question");
             dataTable.Columns.Add("Answer");
+                foreach (var item in Questionslist)
+                {
+
+                        DataRow row = dataTable.NewRow();
+                        row["Question"] = item.Question;
+                        row["Answer"] = "<div>" + item.HtmlAnswers.Replace("\n", string.Empty).Replace("\r", string.Empty) + "</div>";
+                        dataTable.Rows.Add(row);
+                    
+                }
+            
+
+            CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\Questiontrain.csv", "\t");
+            return View();
+        }
+
+
+        public IActionResult test2()
+        {
+
+            CategoriesModel categoriesModel = new CategoriesModel();
+            categoriesModel.Name = "trivia";
+            categoriesModel.CreaDate = DateTime.Now;
+            List<ConversationsModel> conversationsModels = new List<ConversationsModel>();
+            var lines =System.IO.File.ReadLines(@"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\trivia.yml").ToList();
+            for(int i = 0; i < lines.Count(); i=i+2)
+            {
+                int j = i;
+                if (j < lines.Count()-2)
+                {
+
+                
+                ConversationsModel conversationsModel = new ConversationsModel();
+                conversationsModel.Question = lines[j].Replace("-", "");
+                conversationsModel.HtmlAnswers = lines[++j].Replace("  -", "");
+                conversationsModel.Categories = categoriesModel;
+                conversationsModel.CreaDate = DateTime.Now;
+                conversationsModels.Add(conversationsModel);
+                }
+            }
+
+ 
+            _dbContext.Conversations.AddRange(conversationsModels);
+            var resusslt = _dbContext.SaveChanges();
+            return View();
+        }
+
+
+        public IActionResult test3()
+        {
+            CategoriesModel categoriesModel = new CategoriesModel();
+            categoriesModel.Name = "asp.net-mvc-4";
+            categoriesModel.CreaDate = DateTime.Now;
+            List<ConversationsModel> conversationsModels = new List<ConversationsModel>();
+
+            var Questionslist = _dbContext.Questions;
+            var max = Questionslist.Max(x => x.Similar); 
             for (int i = 0; i < max; i++)
             {
                 var lists = Questionslist.Where(x => x.Similar == i);
@@ -113,40 +169,20 @@ namespace AskCaro.Controllers
                 {
                     if (!String.IsNullOrEmpty(item.TextDescription) && !String.IsNullOrEmpty(item.HtmlAnswers))
                     {
-                        DataRow row = dataTable.NewRow();
-                        var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
-                        row["Question"] = result;
-                        row["Similar"] = item.Similar;
-                        row["Answer"] = "<div>" + item.HtmlAnswers.Replace("\n", string.Empty).Replace("\r", string.Empty) + "</div>";
-                        dataTable.Rows.Add(row);
+                        ConversationsModel conversationsModel = new ConversationsModel();
+                        conversationsModel.Question = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
+                        conversationsModel.HtmlAnswers = "<div>" + item.HtmlAnswers.Replace("\n", string.Empty).Replace("\r", string.Empty) + "</div>";
+                        conversationsModel.Categories = categoriesModel;
+                        conversationsModel.CreaDate = DateTime.Now;
+                        conversationsModels.Add(conversationsModel);
                     }
                 }
             }
 
-            CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\Questiontrain.csv", "\t");
+            _dbContext.Conversations.AddRange(conversationsModels);
+            var resusslt = _dbContext.SaveChanges();
             return View();
         }
-
-        //public IActionResult test2()
-        //{
-        //    var Questionslist = _dbContext.Questions.Include(c => c.Tags).Include(c => c.Answers);
-        //    DataTable dataTable = new DataTable();
-        //    dataTable.Columns.Add("LongDescription");
-        //    dataTable.Columns.Add("answer");
-        //    foreach (var item in Questionslist)
-        //    {
-        //        if (item.Answers.Count > 0)
-        //        {
-        //            DataRow row = dataTable.NewRow();
-        //            var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
-        //            row["LongDescription"] = result;
-        //            row["answer"] = item.Answers.Last().Description.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(",", string.Empty).Replace("    ", string.Empty);
-        //            dataTable.Rows.Add(row);
-        //        }
-        //    }
-        //    CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\peopletest.csv");
-        //    return View();
-        //}
 
 
         public IActionResult train()

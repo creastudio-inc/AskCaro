@@ -36,8 +36,8 @@ namespace AskCaro.Controllers
             AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur main = new AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur();
             string countt = main.GetLastPageNumbers();
             int count = int.Parse(countt);
-            int simillar = 0;
-            for (int i = 0; i < count; i++)
+            int simillar = 4736;
+            for (int i = 317; i < count; i++)
             {
                 var item = main.Start(i);
                 foreach (var x in item)
@@ -59,26 +59,35 @@ namespace AskCaro.Controllers
                         AnswerModel.voteCount = answers.voteCount;
                         questionModel.Answers.Add(AnswerModel);
                     }
-                    var maxZ = questionModel.Answers.Max(obj => obj.voteCount);
+                    int maxZ = 0;
+                    if (questionModel.Answers.Count > 0)
+                    {
+
+                   
+                    maxZ = questionModel.Answers.Max(obj => obj.voteCount);
 
                     questionModel.HtmlAnswers = questionModel.Answers.Where(obj => obj.voteCount == maxZ).FirstOrDefault().Htmldescription;
-
-                    // 
-                    questionModels.Add(questionModel);
-                    AskCaro_QuestionnaireAspirateur.GoogleAspirateur googleAspirateur = new AskCaro_QuestionnaireAspirateur.GoogleAspirateur();
-                   var listgoogle=  googleAspirateur.Start(x.title,x.hreflink, "stackoverflow.com");
-                    foreach(var google in listgoogle)
-                    {
-                        QuestionModel questionModelSimilar = new QuestionModel();
-                        questionModelSimilar.Title = google.Title;
-                        questionModelSimilar.Similar = simillar;
-                        questionModelSimilar.LinkHref = google.hreflink;
-                        questionModelSimilar.TextDescription = main.GetDescrip(google.hreflink);
-                        questionModelSimilar.HtmlDescription = main.GetDescrip(google.hreflink);
-                        questionModelSimilar.HtmlAnswers = questionModel.HtmlAnswers;
-                        questionModels.Add(questionModelSimilar);
                     }
+                    
+                    questionModels.Add(questionModel);
+                    //AskCaro_QuestionnaireAspirateur.GoogleAspirateur googleAspirateur = new AskCaro_QuestionnaireAspirateur.GoogleAspirateur();
+                    //var listgoogle = googleAspirateur.Start(x.title, x.hreflink, "stackoverflow.com");
+                    //foreach (var google in listgoogle)
+                    //{
+                    //    QuestionModel questionModelSimilar = new QuestionModel();
+                    //    questionModelSimilar.Title = google.Title;
+                    //    questionModelSimilar.Similar = simillar;
+                    //    questionModelSimilar.LinkHref = google.hreflink;
+                    //    questionModelSimilar.TextDescription = main.GetDescrip(google.hreflink);
+                    //    questionModelSimilar.HtmlDescription = main.GetDescrip(google.hreflink);
+                    //    questionModelSimilar.HtmlAnswers = questionModel.HtmlAnswers;
+                    //    questionModels.Add(questionModelSimilar);
+                    //}
                     simillar++;
+                    //if (simillar % 40 == 0)
+                    //{
+                    //    System.Threading.Thread.Sleep(10000);
+                    //}
                     _dbContext.Questions.AddRange(questionModels);
                     var result = _dbContext.SaveChanges();
                     System.Threading.Thread.Sleep(1000);
@@ -89,34 +98,34 @@ namespace AskCaro.Controllers
 
 
 
-        //public IActionResult test()
-        //{
-        //    var Questionslist = _dbContext.Questions;
-        //    var max = Questionslist.Max(x => x.Similar);
-        //    DataTable dataTable = new DataTable();
-        //    dataTable.Columns.Add("Similar");
-        //    dataTable.Columns.Add("Question");
-        //    dataTable.Columns.Add("Answer");
-        //    for (int i = 0; i < max; i++)
-        //    {
-        //        var lists = Questionslist.Where(x => x.Similar == i);
-        //        foreach (var item in lists)
-        //        {
-        //            if (!String.IsNullOrEmpty(item.TextDescription))
-        //            {
-        //                DataRow row = dataTable.NewRow();
-        //                var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
-        //                row["Question"] = result;
-        //                row["Similar"] = item.Similar;
-        //                row["Answer"] = "<div>"+item.HtmlAnswers.Replace("\n", string.Empty).Replace("\r", string.Empty) + "</div>";
-        //                dataTable.Rows.Add(row);
-        //            }
-        //        }
-        //    }
-            
-        //    CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\Questiontrain.csv", "\t");
-        //    return View();
-        //}
+        public IActionResult test()
+        {
+            var Questionslist = _dbContext.Questions;
+            var max = Questionslist.Max(x => x.Similar);
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Similar");
+            dataTable.Columns.Add("Question");
+            dataTable.Columns.Add("Answer");
+            for (int i = 0; i < max; i++)
+            {
+                var lists = Questionslist.Where(x => x.Similar == i);
+                foreach (var item in lists)
+                {
+                    if (!String.IsNullOrEmpty(item.TextDescription) && !String.IsNullOrEmpty(item.HtmlAnswers))
+                    {
+                        DataRow row = dataTable.NewRow();
+                        var result = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(item.TextDescription);
+                        row["Question"] = result;
+                        row["Similar"] = item.Similar;
+                        row["Answer"] = "<div>" + item.HtmlAnswers.Replace("\n", string.Empty).Replace("\r", string.Empty) + "</div>";
+                        dataTable.Rows.Add(row);
+                    }
+                }
+            }
+
+            CreateCSV(dataTable, @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\Data\Questiontrain.csv", "\t");
+            return View();
+        }
 
         //public IActionResult test2()
         //{

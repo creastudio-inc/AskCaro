@@ -16,8 +16,8 @@ namespace AskCaro.MachineLearning
 {
     public static class Program
     {
-       public static string AppPath = @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\";
-        // public static string AppPath = @"D:\home\site\wwwroot\MachineLearning\";
+        //public static string AppPath = @"C:\Users\ahmed\source\repos\AskCaro\AskCaro\MachineLearning\";
+        public static string AppPath = @"D:\home\site\wwwroot\MachineLearning\";
 
         private static string BaseDatasetsRelativePath = $@"{AppPath}Data";
         // private static string DataSetRelativePath = $"{BaseDatasetsRelativePath}/corefx-issues-train.tsv";

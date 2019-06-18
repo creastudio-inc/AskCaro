@@ -1,499 +1,336 @@
-﻿@{ 
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
-    <style>
-        body {
-            font-family: 'Raleway', sans-serif;
-            background-color: #ACCEDC;
-            margin: 50px 0px;
-        }
-
-        .main-section small {
-            font-size: 12px;
-        }
-
-        .main-section h3, .main-section h5 {
-            margin: 0px;
-        }
-
-        .main-section {
-            width: 960px;
-            background-color: #fff;
-            margin: auto;
-        }
-
-        .head-section {
-            border-bottom: 1px solid #E6E6E6;
-            clear: both;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .headLeft-section {
-            width: calc(30% - 1px);
-            float: left;
-            border-right: 1px solid #E6E6E6;
-        }
-
-        .headLeft-sub {
-            padding: 15px;
-            text-align: center;
-        }
-
-            .headLeft-sub input {
-                width: 60%;
-                border-radius: 0px;
-                border: 1px solid #E6E6E6;
-                padding: 7px;
-            }
-
-            .headLeft-sub button {
-                background: #009EF7;
-                color: #fff;
-                border: 1px solid #E6E6E6;
-                padding: 7px 15px;
-            }
-
-        .headRight-section {
-            width: 70%;
-            float: left;
-        }
-
-        .headRight-sub {
-            padding: 10px 15px 0px 15px;
-        }
-
-        .body-section {
-            clear: both;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .left-section {
-            width: calc(30% - 1px);
-            float: left;
-            height: 500px;
-            border-right: 1px solid #E6E6E6;
-            background-color: #FFF;
-            z-index: 1;
-            position: relative;
-        }
-
-            .left-section ul {
-                padding: 0px;
-                margin: 0px;
-                list-style: none;
-            }
-
-                .left-section ul li {
-                    padding: 15px 0px;
-                    cursor: pointer;
-                }
-
-                    .left-section ul li.active {
-                        background: #009EF7;
-                        color: #fff;
-                        position: relative;
-                    }
-
-        .mCustomScrollBox, .mCSB_container {
-            overflow: unset !important;
-        }
-
-        .left-section ul li.active .desc .time {
-            color: #fff;
-        }
-
-        .left-section ul li.active:before {
-            position: absolute;
-            content: '';
-            right: -10px;
-            border: 5px solid #009EF7;
-            top: 0px;
-            bottom: 0px;
-            border-radius: 0px 3px 3px 0px;
-        }
-
-        .left-section ul li.active:after {
-            position: absolute;
-            content: "";
-            bottom: 0px;
-            right: 0px;
-            left: auto;
-            width: 100%;
-            top: 0px;
-            -webkit-box-shadow: -8px 4px 10px #a1a1a1;
-            -moz-box-shadow: -8px 4px 10px #a1a1a1;
-            box-shadow: -8px 4px 10px #a1a1a1;
-        }
-
-        .left-section .chatList {
-            overflow: hidden;
-        }
-
-            .left-section .chatList .img {
-                width: 60px;
-                float: left;
-                text-align: center;
-                position: relative;
-            }
-
-                .left-section .chatList .img img {
-                    width: 30px;
-                    border-radius: 50%;
-                }
-
-                .left-section .chatList .img i {
-                    position: absolute;
-                    font-size: 10px;
-                    color: #52E2A7;
-                    border: 1px solid #fff;
-                    border-radius: 50%;
-                    left: 10px;
-                }
-
-            .left-section .chatList .desc {
-                width: calc(100% - 60px);
-                float: left;
-                position: relative;
-            }
-
-                .left-section .chatList .desc h5 {
-                    margin-top: 6px;
-                    line-height: 5px;
-                }
-
-                .left-section .chatList .desc .time {
-                    position: absolute;
-                    right: 15px;
-                    color: #c1c1c1;
-                }
-
-        .right-section {
-            width: 70%;
-            float: left;
-            height: 500px;
-            background-color: #F6F6F6;
-            position: relative;
-        }
-
-        .message {
-            /*height: calc(100% - 68px);*/
-            font-family: sans-serif;
-        }
-
-            .message ul {
-                padding: 0px;
-                list-style: none;
-                margin: 0px auto;
-                width: 90%;
-                overflow: hidden;
-            }
-
-                .message ul li {
-                    position: relative;
-                    width: 80%;
-                    padding: 15px 0px;
-                    clear: both;
-                }
-
-                    .message ul li.msg-left {
-                        float: left;
-                    }
-
-                        .message ul li.msg-left img {
-                            position: absolute;
-                            width: 40px;
-                            bottom: 30px;
-                        }
-
-                        .message ul li.msg-left .msg-desc {
-                            margin-left: 70px;
-                            font-size: 12px;
-                            background: #E8E8E8;
-                            padding: 5px 10px;
-                            border-radius: 5px 5px 5px 0px;
-                            position: relative;
-                        }
-
-                            .message ul li.msg-left .msg-desc:before {
-                                position: absolute;
-                                content: '';
-                                border: 10px solid transparent;
-                                border-bottom-color: #E8E8E8;
-                                bottom: 0px;
-                                left: -10px;
-                            }
-
-                        .message ul li.msg-left small {
-                            float: right;
-                            color: #c1c1c1;
-                        }
-
-                    .message ul li.msg-right {
-                        float: right;
-                    }
-
-                        .message ul li.msg-right img {
-                            position: absolute;
-                            width: 40px;
-                            right: 0px;
-                            bottom: 30px;
-                        }
-
-                        .message ul li.msg-right .msg-desc {
-                            margin-right: 70px;
-                            font-size: 12px;
-                            background: #cce5ff;
-                            color: #004085;
-                            padding: 5px 10px;
-                            border-radius: 5px 5px 5px 0px;
-                            position: relative;
-                        }
-
-                            .message ul li.msg-right .msg-desc:before {
-                                position: absolute;
-                                content: '';
-                                border: 10px solid transparent;
-                                border-bottom-color: #cce5ff;
-                                bottom: 0px;
-                                right: -10px;
-                            }
-
-                        .message ul li.msg-right small {
-                            float: right;
-                            color: #c1c1c1;
-                            margin-right: 70px;
-                        }
-
-                    .message ul li.msg-day {
-                        border-top: 1px solid #EBEBEB;
-                        width: 100%;
-                        padding: 0px;
-                        margin: 15px 0px;
-                    }
-
-                        .message ul li.msg-day small {
-                            position: absolute;
-                            top: -10px;
-                            background: #F6F6F6;
-                            color: #c1c1c1;
-                            padding: 3px 10px;
-                            left: 50%;
-                            transform: translateX(-50%);
-                        }
-
-        .right-section-bottom {
-            background: #fff;
-            width: 100%;
-            padding: 15px;
-            position: absolute;
-            bottom: 0px;
-            border-top: 1px solid #E6E6E6;
-            text-align: center;
-        }
-
-            .right-section-bottom input {
-                border: 0px;
-                padding: 8px 5px;
-                width: calc(100% - 150px);
-            }
-
-            .right-section-bottom .btn-send {
-                border: 0px;
-                padding: 8px 10px;
-                float: right;
-                margin-right: 30px;
-                color: #009EF7;
-                font-size: 18px;
-                background: #fff;
-                cursor: pointer;
-            }
-
-        .upload-btn {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            float: left;
-        }
-
-            .upload-btn .btn {
-                border: 0px;
-                padding: 8px 10px;
-                color: #009EF7;
-                font-size: 18px;
-                background: #fff;
-                cursor: pointer;
-            }
-
-            .upload-btn input[type=file] {
-                font-size: 100px;
-                position: absolute;
-                left: 0;
-                top: 0;
-                opacity: 0;
-            }
-
-    </style>
-</head>
-<body>
-    <div class="main-section">
-        <div class="head-section">
-            <div class="headLeft-section">
-                <div class="headLeft-sub">
-
-
+﻿<section class="seo_home_area">
+    <div class="home_bubble">
+        <div class="bubble b_one"></div>
+        <div class="bubble b_two"></div>
+        <div class="bubble b_three"></div>
+        <div class="bubble b_four"></div>
+        <div class="bubble b_five"></div>
+        <div class="bubble b_six"></div>
+        <div class="triangle b_seven" data-parallax='{"x": 20, "y": 150}'><img src="~/Caro/img/seo/xtriangle_one.png.pagespeed.ic.W1Sg01AM8I.png" alt=""></div>
+        <div class="triangle b_eight" data-parallax='{"x": 120, "y": -10}'><img src="~/Caro/img/seo/xtriangle_two.png.pagespeed.ic.8yTUEUDnmH.png" alt=""></div>
+        <div class="triangle b_nine"><img src="~/Caro/img\seo\triangle_three.png.pagespeed.ce.pqYABVEJKZ.png" alt=""></div>
+    </div>
+    <div class="banner_top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center seo_banner_content">
+                    <h2 class="wow fadeInUp" data-wow-delay="0.3s">Drive More Customers<br> Through Digital</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.5s">Chap fantastic skive off chancer knees up starkers easy peasy up the<br> kyver David, bleeding the BBC tomfoolery chimney.!</p>
+                    <a href="#" class="seo_btn seo_btn_one btn_hover">Get Started</a>
+                    <a href="#" class="seo_btn seo_btn_two btn_hover">Learn More</a>
                 </div>
             </div>
-            <div class="headRight-section">
-                <div class="headRight-sub">
-                    <h3>
-                        Say hello to the Caro
-                    </h3>
-                    <small>Ask Caro are powered by artificial intelligence and react differently to thousands of possible answers</small>
-                </div>
+            <div class="saas_home_img wow fadeInUp" data-wow-delay="0.8s">
+                <img src="~/Caro/img\seo\ximage.png.pagespeed.ic._o3TgroIvN.png" alt="">
             </div>
         </div>
-        <div class="body-section">
-            <div class="left-section ">
-                <ul>
-                    <li class="active">
-                        <div class="chatList">
-                            <div class="img">
-                                <img src="https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png">
-                            </div>
-                            <div class="desc">
-                                <small class="time"> </small>
-                                <h5>Ask Caro</h5>
-                                <small>coding assistant robot</small>
-                            </div>
+    </div>
+</section>
+<section class="seo_service_area sec_pad">
+    <div class="container">
+        <div class="seo_sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.3s">
+            <h2>How does it work?</h2>
+            <p>The full monty burke posh excuse my French Richard cheeky bobby spiffing crikey<br> Why gormless, pear shaped.!</p>
+        </div>
+        <div class="row seo_service_info">
+            <div class="col-lg-4 col-md-6">
+                <div class="seo_service_item">
+                    <img src="~/Caro/img\seo\xicon1.png.pagespeed.ic.cjyWftiF6k.png" alt="">
+                    <a href="#">
+                        <h4>Digital Analytics</h4>
+                    </a>
+                    <p>Twit cras excuse my French matie boy grub it's all gone to pot off his nut butty horse play blow off pardon you hanky panky.!</p>
+                    <a href="#"><i class="arrow_right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="seo_service_item">
+                    <img src="~/Caro/img\seo\xicon2.png.pagespeed.ic.INc_piq5YV.png" alt="">
+                    <a href="#">
+                        <h4>Digital Marketing</h4>
+                    </a>
+                    <p>Twit cras excuse my French matie boy grub it's all gone to pot off his nut butty horse play blow off pardon you hanky panky.!</p>
+                    <a href="#"><i class="arrow_right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="seo_service_item">
+                    <img src="~/Caro/img\seo\xicon5.png.pagespeed.ic.jPq4iTRZMx.png" alt="">
+                    <a href="#">
+                        <h4>Email Marketing</h4>
+                    </a>
+                    <p>Twit cras excuse my French matie boy grub it's all gone to pot off his nut butty horse play blow off pardon you hanky panky.!</p>
+                    <a href="#"><i class="arrow_right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-12 text-center mt_40">
+                <a href="#" class="seo_btn seo_btn_one btn_hover">All Features</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="seo_features_one sec_pad">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-6">
+                <div class="seo_features_img">
+                    <div class="round_circle"></div>
+                    <div class="round_circle two"></div>
+                    <img src="~/Caro/img\seo\xfeatures_img.png.pagespeed.ic.1y0BxVrMKi.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="seo_features_content">
+                    <h2>Get tips & tricks on how to skyrocket your sales.</h2>
+                    <p>Faff about only a quid blower I don't want no agro bleeding chimney pot burke tosser cras nice one boot fanny.!</p>
+                    <div class="media seo_features_item">
+                        <div class="icon"><img src="~/Caro/img\seo\icon4.png.pagespeed.ce.BazYu56gw8.png" alt=""></div>
+                        <div class="media-body">
+                            <h3>Reporting & Analysis</h3>
+                            <p>Naff are you taking the piss say blow off faff about wellies richard.</p>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="right-section">
-                <div class="message mCustomScrollbar" data-mcs-theme="minimal-dark">
-                    <ul class="messages " style="overflow-y: scroll; height: 430px">
-                        
-                        <li class="msg-day"><small>Wednesday</small></li>
-                        
-                    </ul>
-                </div>
-                <div class="right-section-bottom">
-                    <form>
-                        <input type="text" name="" class="message_input" placeholder="type here...">
-                        <button class="btn-send send_message"><i class="fa fa-send"></i></button>
-                    </form>
+                    </div>
+                    <div class="media seo_features_item">
+                        <div class="icon two"><img src="~/Caro/img\seo\xicon3.png.pagespeed.ic.gRNwtP7Mz4.png" alt=""></div>
+                        <div class="media-body">
+                            <h3>Reporting & Analysis</h3>
+                            <p>Naff are you taking the piss say blow off faff about wellies richard.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="message_template" style=" display: none; ">
-        <li class="message">
-            <div class="msg-left-sub">
-                <img class="avatar" id="avatar" src="">
-                <div class="msg-desc">
-                    <div class="text"></div>
+</section>
+<section class="seo_features_one sec_pad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="seo_features_img seo_features_img_two">
+                    <div class="round_circle"></div>
+                    <div class="round_circle two"></div>
+                    <img src="~/Caro/img\seo\xfeatures_img_two.png.pagespeed.ic.WgPgQSfSW-.png" alt="">
                 </div>
-                <small>05:25 am</small>
             </div>
-        </li>
+            <div class="col-lg-6 d-flex align-items-center">
+                <div class="seo_features_content">
+                    <h2>Get tips & tricks on how to skyrocket your sales.</h2>
+                    <h6>What a plonker bamboozled so I said say what a load of rubbish owt to do with me haggle.</h6>
+                    <p>Cheeky bugger gosh codswallop chap bamboozled blatant cracking goal brown bread, pear shaped cor blimey guvnor easy peasy lemon squeezy hotpot spiffing good time, chancer a spend a penny spiffing I don't want no agro tinkety tonk old fruit.</p>
+                    <a href="#" class="seo_btn seo_btn_one btn_hover">Learn More</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script>
+</section>
+<section class="seo_subscribe_area">
+    <div class="overlay_img"></div>
+    <div class="cloud_img" style="background:url(img/seo/xcloud.png.pagespeed.ic.Xsekmmadfq.png) no-repeat"></div>
+    <div class="container">
+        <div class="seo_sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.3s">
+            <h2>Check your Website’s SEO!</h2>
+            <p>The full monty burke posh excuse my French Richard cheeky bobby spiffing crikey<br> Why gormless, pear shaped.!</p>
+        </div>
+        <form action="#" class="row seo_subscribe_form">
+            <div class="input-group col-lg-5 col-md-5 col-sm-6">
+                <input type="url" name="website" id="website" placeholder="Web URL" class="form-control">
+            </div>
+            <div class="input-group col-lg-5 col-md-4 col-sm-6">
+                <input type="email" name="email" id="emails" placeholder="Email" class="form-control">
+            </div>
+            <div class="input-group col-lg-2 col-md-3 col-sm-12">
+                <input type="submit" name="submit" value="Check" class="check-btn">
+            </div>
+        </form>
+    </div>
+</section>
+<section class="case_studies_area sec_pad">
+    <div class="container">
+        <div class="seo_sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.3s">
+            <h2>Our case studies</h2>
+            <p>The full monty burke posh excuse my French Richard cheeky bobby spiffing crikey<br> Why gormless, pear shaped.!</p>
+        </div>
+        <div class="row">
+            <div class="case_studies_slider owl-carousel">
+                <div class="studies_item">
+                    <img src="~/Caro/img\seo\xstudies_img_one.jpg.pagespeed.ic.gQfKrzCHyR.jpeg" alt="">
+                    <div class="text">
+                        <a href="#">
+                            <h4>Content Marketing</h4>
+                        </a>
+                        <p><a href="#">Marketing,</a><a href="#">Seo</a></p>
+                    </div>
+                </div>
+                <div class="studies_item">
+                    <img src="~/Caro/img\seo\xstudies_img_two.jpg.pagespeed.ic.hIqRjzAJU4.jpeg" alt="">
+                    <div class="text">
+                        <a href="#">
+                            <h4>Content Marketing</h4>
+                        </a>
+                        <p><a href="#">Marketing,</a><a href="#">Seo</a></p>
+                    </div>
+                </div>
+                <div class="studies_item">
+                    <img src="~/Caro/img\seo\xstudies_img_three.jpg.pagespeed.ic.d15WIASYMf.jpeg" alt="">
+                    <div class="text">
+                        <a href="#">
+                            <h4>Content Marketing</h4>
+                        </a>
+                        <p><a href="#">Marketing,</a><a href="#">Seo</a></p>
+                    </div>
+                </div>
+                <div class="studies_item">
+                    <img src="~/Caro/img\seo\xstudies_img_one.jpg.pagespeed.ic.gQfKrzCHyR.jpeg" alt="">
+                    <div class="text">
+                        <a href="#">
+                            <h4>Content Marketing</h4>
+                        </a>
+                        <p><a href="#">Marketing,</a><a href="#">Seo</a></p>
+                    </div>
+                </div>
+                <div class="studies_item">
+                    <img src="~/Caro/img\seo\xstudies_img_two.jpg.pagespeed.ic.hIqRjzAJU4.jpeg" alt="">
+                    <div class="text">
+                        <a href="#">
+                            <h4>Content Marketing</h4>
+                        </a>
+                        <p><a href="#">Marketing,</a><a href="#">Seo</a></p>
+                    </div>
+                </div>
+                <div class="studies_item">
+                    <img src="~/Caro/img\seo\xstudies_img_three.jpg.pagespeed.ic.d15WIASYMf.jpeg" alt="">
+                    <div class="text">
+                        <a href="#">
+                            <h4>Content Marketing</h4>
+                        </a>
+                        <p><a href="#">Marketing,</a><a href="#">Seo</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    var Message;
-    function Message(arg) {
-        this.text = arg.text, this.message_side = arg.message_side, this.srcimg = arg.srcimg;
-        this.draw=function (_this) {
-            return function () {
-                var $message;
-                $message = $($('.message_template').clone().html());
-                console.log($message.find('#avatar'));
-                console.log(this.srcimg);
-                $message.find('#avatar').attr("src", this.srcimg);
+<section class="seo_fact_area sec_pad">
+    <div class="home_bubble">
+        <div class="bubble b_one"></div>
+        <div class="bubble b_three"></div>
+        <div class="bubble b_four"></div>
+        <div class="bubble b_six"></div>
+        <div class="triangle b_eight" data-parallax='{"x": 120, "y": -10}'><img src="~/Caro/img\seo\xtriangle_one.png.pagespeed.ic.W1Sg01AM8I.png" alt=""></div>
+    </div>
+    <div class="container">
+        <div class="seo_sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.3s">
+            <h2>Over 1200+<br> completed work & Still counting.</h2>
+        </div>
+        <div class="seo_fact_info">
+            <div class="seo_fact_item">
+                <div class="text">
+                    <div class="counter one">693</div>
+                    <p>Happy Clients</p>
+                </div>
+            </div>
+            <div class="seo_fact_item">
+                <div class="text">
+                    <div class="counter two">276</div>
+                    <p>Projects</p>
+                </div>
+            </div>
+            <div class="seo_fact_item">
+                <div class="text">
+                    <div class="counter three">102</div>
+                    <p>SEO Winners</p>
+                </div>
+            </div>
+            <div class="seo_fact_item last">
+                <div class="text">
+                    <div class="counter four">93</div>
+                    <p>Experience</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="testimonial_area sec_pad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 d-flex align-items-center">
+                <div class="testimonial_title">
+                    <div class="seo_sec_title wow fadeInUp" data-wow-delay="0.3s">
+                        <h2>Check testimonials for<br> our satisfied clients</h2>
+                        <p>That ummm I'm telling Why say bleeder smashing lemon squeezy tosser, cheesed off dropped.!</p>
+                    </div>
+                </div>
 
-                $message.addClass(_this.message_side).find('.text').html(_this.text);
-                $('.messages').append($message);
-                return setTimeout(function () {
-                    return $message.addClass('appeared');
-                }
-                , 0);
-            }
-            ;
-        }
-        (this);
-        return this;
-    }
-
-        var getMessageText, message_side, srcimg, sendMessage;
-        message_side ='msg-left';
-        srcimg ='https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png';
-        function getMessageText() {
-            var $message_input;
-            $message_input=$('.message_input');
-            return $message_input.val();
-        }
-
-       function sendMessage (text) {
-            var $messages, message;
-            if (text.trim()==='') {
-                return;
-            }
-            $('.message_input').val('');
-           message_side = message_side === 'msg-right' ? 'msg-right' : 'msg-left';
-           srcimg = message_side === 'msg-left' ? 'https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png' : 'https://asia.ifoam.bio/wp-content/uploads/2018/12/avatar__181424.png';
-            message=new Message( {
-                text: text, message_side: message_side, srcimg:srcimg
-            }
-            );
-           message.draw();
-           var ht = 0;
-           $messages = $('.messages');
-
-           $(".messages li").each(function () {
-               ht += $(this).height();
-           });
-           return $messages.animate({ scrollTop: ht });
-        }
-
-        $('.send_message').click(function (e) {
-            e.preventDefault();
-
-            var question = getMessageText();
-            message_side = 'msg-right';
-            sendMessage(question);
-            $.ajax({
-                dataType: "Json",
-                type: "POST",
-                url: '@Url.Action("ReponseCaro", "Home")',
-                data: { Question: question },
-                success: function (data) {
-                    message_side = 'msg-left';
-                    sendMessage(data.answer);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(errorThrown)
-                }
-
-            });
-        }
-        );
-        //$('.message_input').keyup(function (e) {
-        //    if (e.which===13) {
-        //        return sendMessage(getMessageText());
-        //    }
-        //}
-        //);
-        sendMessage('Hello i am caro! :)');
-
-    </script>
-
-</body>
-</html>
+            </div>
+            <div class="col-lg-6 offset-lg-1">
+                <div class="stratup_testimonial_info d-flex align-items-center">
+                    <div class="testimonial_slider_four owl-carousel">
+                        <div class="item">
+                            <div class="author_img">
+                                <img src="~/Caro/img\new\xmember_01.jpg.pagespeed.ic.SQWUxK9OF6.jpeg" alt="">
+                            </div>
+                            <p>He nicked it hanky panky Eaton naff it's your round quaint cheeky cheers, tomfoolery bonnet posh blimey what a plonker vagabond, zonked Elizabeth give us a bell.?</p>
+                            <h5>Phillip Anthropy</h5>
+                            <h6>UI/UX designer</h6>
+                        </div>
+                        <div class="item">
+                            <div class="author_img">
+                                <img src="~/Caro/img\new\xmember_01.jpg.pagespeed.ic.SQWUxK9OF6.jpeg" alt="">
+                            </div>
+                            <p>He nicked it hanky panky Eaton naff it's your round quaint cheeky cheers, tomfoolery bonnet posh blimey what a plonker vagabond, zonked Elizabeth give us a bell.?</p>
+                            <h5>Phillip Anthropy</h5>
+                            <h6>UI/UX designer</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="seo_partner_logo_area sec_pad">
+    <div class="container">
+        <div class="seo_sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.3s">
+            <h2>Relied on marketers, trusted by engineers,<br> and beloved by executives, everyw here.</h2>
+        </div>
+        <div class="partner_logo_area_four">
+            <div class="row partner_info">
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_01.png.pagespeed.ic.bVP4t5-DLU.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_02.png.pagespeed.ic.29fzrneZuP.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_03.png.pagespeed.ic.GnOlyajusD.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_04.png.pagespeed.ic.JQj3eYn89v.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_05.png.pagespeed.ic.ahTKavN6nj.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_06.png.pagespeed.ic.PrBoZVJ5_M.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_07.png.pagespeed.ic.UCZUbO2Oxm.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_08.png.pagespeed.ic.r-eFtYPSA4.png" alt=""></a>
+                </div>
+                <div class="logo_item">
+                    <a href="#"><img src="~/Caro/img\seo\xlogo_09.png.pagespeed.ic.fJbVqgD85F.png" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="seo_call_to_action_area sec_pad">
+    <div class="container">
+        <div class="seo_call_action_text">
+            <h2>Ready to get started?<br> lt's fast, free and very easy!</h2>
+            <a href="#" class="about_btn">Get a free Estimate</a>
+        </div>
+    </div>
+</section>

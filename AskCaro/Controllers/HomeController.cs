@@ -17,12 +17,22 @@ namespace AskCaro.Controllers
            // AskCaro.MachineLearning.Program.train();
             return View();
         }
+
+        public IActionResult Process()
+        {
+            return View();
+        }
+
+        public IActionResult FAQ()
+        {
+            return View();
+        }
         [HttpPost]
         public JsonResult ReponseCaro(String Question)
         {
-            QuestionsIssue issue = new QuestionsIssue() { ShortDescription = Question,LongDescription =Question};
+            QuestionsIssue issue = new QuestionsIssue() { Question = Question};
             var test = AskCaro.MachineLearning.Program.BuildModel(AskCaro.MachineLearning.Program.ModelPath, issue);
-            return Json(new { Answer = test.answer });
+            return Json(new { Answer = test.Answer });
         }
 
         public IActionResult Privacy()

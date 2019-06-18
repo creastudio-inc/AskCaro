@@ -1,4 +1,7 @@
-﻿<section class="seo_home_area">
+﻿@{ 
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<section class="seo_home_area">
     <div class="home_bubble">
         <div class="bubble b_one"></div>
         <div class="bubble b_two"></div>
@@ -38,7 +41,7 @@
                     </div>
                     <h5 class="f_600 f_p t_color3">Ask Caro</h5>
                     <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy.!</p>
-                    <p class="mb-0"><a href="#">Read More</a><i class="ti-arrow-right"></i></p>
+                    <p class="mb-0"><a href="@Url.Action("Chat")">Read More</a><i class="ti-arrow-right"></i></p>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
@@ -49,7 +52,7 @@
                     </div>
                     <h5 class="f_600 f_p t_color3">Upload Picture</h5>
                     <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy.!</p>
-                    <p class="mb-0"><a href="#">Read More</a><i class="ti-arrow-right"></i></p>
+                    <p class="mb-0"><a href="@Url.Action("Picture")">Read More</a><i class="ti-arrow-right"></i></p>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
@@ -60,7 +63,7 @@
                     </div>
                     <h5 class="f_600 f_p t_color3">Search Avance</h5>
                     <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy.!</p>
-                    <p class="mb-0"><a href="#">Read More</a><i class="ti-arrow-right"></i></p>
+                    <p class="mb-0"><a href="@Url.Action("SearchAvance")">Read More</a><i class="ti-arrow-right"></i></p>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
@@ -71,7 +74,7 @@
                     </div>
                     <h5 class="f_600 f_p t_color3">About Caro</h5>
                     <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy.!</p>
-                    <p class="mb-0"><a href="#">Read More</a><i class="ti-arrow-right"></i></p>
+                    <p class="mb-0"><a href="@Url.Action("AboutCaro")">Read More</a><i class="ti-arrow-right"></i></p>
                 </div>
             </div>
         </div>

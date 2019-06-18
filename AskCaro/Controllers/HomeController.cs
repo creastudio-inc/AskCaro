@@ -27,6 +27,23 @@ namespace AskCaro.Controllers
         {
             return View();
         }
+
+        public IActionResult AboutCaro()
+        {
+            return View();
+        }
+        public IActionResult Picture()
+        {
+            return View();
+        }
+        public IActionResult Chat()
+        {
+            return View();
+        }
+        public IActionResult SearchAvance()
+        {
+            return View();
+        }
         [HttpPost]
         public JsonResult ReponseCaro(String Question)
         {

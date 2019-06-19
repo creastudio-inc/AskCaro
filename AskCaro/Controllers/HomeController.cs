@@ -17,6 +17,14 @@ namespace AskCaro.Controllers
            // AskCaro.MachineLearning.Program.train();
             return View();
         }
+        public IActionResult WhatIs()
+        {
+            return View();
+        }
+        public IActionResult Services()
+        {
+            return View();
+        }
 
         public IActionResult Process()
         {

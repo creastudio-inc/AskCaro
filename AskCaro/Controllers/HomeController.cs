@@ -55,9 +55,9 @@ namespace AskCaro.Controllers
         [HttpPost]
         public JsonResult ReponseCaro(String Question)
         {
-            QuestionsIssue issue = new QuestionsIssue() { Question = Question};
-            var test = AskCaro.MachineLearning.Program.BuildModel(AskCaro.MachineLearning.Program.ModelPath, issue);
-            return Json(new { Answer = test.Answer });
+            //QuestionsIssue issue = new QuestionsIssue() { Question = Question};
+            //var test = AskCaro.MachineLearning.Program.BuildModel(AskCaro.MachineLearning.Program.ModelPath, issue);
+            return Json(new { Answer = Question });
         }
 
         public IActionResult Privacy()

@@ -2,6 +2,178 @@
 @{
     ViewData["Title"] = "Chat";
 }
+<style>
 
-<h1>Chat</h1>
+    .containerchat {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+    }
 
+    .darker {
+        border-color: #ccc;
+        background-color: #ddd;
+    }
+
+    .containerchat::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .containerchat img {
+        float: left;
+        max-width: 60px;
+        width: 100%;
+        margin-right: 20px;
+        border-radius: 50%;
+    }
+
+        .containerchat img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+    .time-right {
+        float: right;
+        color: #aaa;
+    }
+
+    .time-left {
+        float: left;
+        color: #999;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="blog_single mb_50">
+                <div class="blog_content cus_p">
+                    <blockquote class="blockquote mb_40">
+                        <h6 class="mb-0 f_size_18 l_height30 f_p f_400">Elizabeth ummm I'm telling bodge spend a penny say wellies say James Bond, bubble and squeak a such a fibber you mug quaint cack what.!</h6>
+                    </blockquote>
+                    <p class="f_400 mb-30">Bloke cracking goal the full monty get stuffed mate posh wellies fantastic knackered tickety-boo Harry porkies, mush excuse my French bender down the pub Oxford bum bag gutted mate car boot pukka loo it's your round, cor blimey guvnor is on your bike mate cup of char some dodgy chav blag happy days nancy boy hotpot.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 messages " id="messages"  style=" height: 400px; overflow: auto; ">
+        </div>
+    </div>
+</div>
+
+<div class="container" style="padding-bottom:200px">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="input-group subcribes">
+                <textarea type="text" name="EMAIL" class="form-control message_input" placeholder="Ask me ^^"> </textarea>
+            </div>
+            <div class="input-group  " style="padding-top:20px">
+                <button class="btn btn_submit f_size_15 f_500 send_message" type="submit">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="message_template" style=" display: none; ">
+    <div class="containerchat">
+        <img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar" id="avatar" style="width:100%;">
+        <p class="text">Sweet! So, what do you wanna do today?</p>
+        <span class="time-right">11:02</span>
+    </div>
+</div>
+@section scripts {
+    <script>
+        function updateScroll() {
+            var element = document.getElementById("messages");
+            element.scrollTop = element.scrollHeight;
+        }
+    var Message;
+    function Message(arg) {
+        this.text = arg.text, this.message_side = arg.message_side, this.srcimg = arg.srcimg;
+        this.draw=function (_this) {
+            return function () {
+                var $message;
+                $message = $($('.message_template').clone().html());
+                $message.find('#avatar').attr("src", this.srcimg).addClass(_this.message_side);
+
+                $message.find('.text').html(_this.text);
+                $('.messages').append($message);
+                return setTimeout(function () {
+                    return $message.addClass(message_side === 'right' ? '' : 'darker');
+                }
+                    , 0);
+            }
+            ;
+        }
+        (this);
+        return this;
+    }
+
+        var getMessageText, message_side, srcimg, sendMessage;
+        message_side ='msg-left';
+        srcimg ='https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png';
+        function getMessageText() {
+            var $message_input;
+            $message_input=$('.message_input');
+            return $message_input.val();
+        }
+
+       function sendMessage (text) {
+            var $messages, message;
+            if (text.trim()==='') {
+                return;
+            }
+            $('.message_input').val('');
+           message_side = message_side === 'right' ? 'right' : 'left';
+           srcimg = message_side === 'left' ? 'https://cdn.dribbble.com/users/279657/screenshots/2701628/chatbot.png' : 'https://asia.ifoam.bio/wp-content/uploads/2018/12/avatar__181424.png';
+            message=new Message( {
+                text: text, message_side: message_side, srcimg:srcimg
+            }
+            );
+           message.draw();
+
+           updateScroll();
+        }
+
+        $('.send_message').click(function (e) {
+            e.preventDefault();
+
+            var question = getMessageText();
+            message_side = 'right';
+            sendMessage(question);
+            $.ajax({
+                dataType: "Json",
+                type: "POST",
+                url: '@Url.Action("ReponseCaro", "Home")',
+                data: { Question: question },
+                success: function (data) {
+                    message_side = '';
+                    sendMessage(data.answer);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown)
+                }
+
+            });
+        }
+        );
+        //$('.message_input').keyup(function (e) {
+        //    if (e.which===13) {
+        //        return sendMessage(getMessageText());
+        //    }
+        //}
+        //);
+        sendMessage('Hello i am caro! :)');
+
+    </script>
+
+
+}

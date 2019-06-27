@@ -7,37 +7,57 @@ using Microsoft.AspNetCore.Mvc;
 using AskCaro.Models;
 using AskCaro.MachineLearning.DataStructures;
 using static AskCaro.MachineLearning.Program;
-using Lucene.Net.Analysis.Standard;
-using System.Text;
-using Lucene.Net.Analysis;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
 
 namespace AskCaro.Controllers
 {
-
     public class HomeController : Controller
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
-
-        public HomeController(IHostingEnvironment hostingEnvironment)
-        {
-            _hostingEnvironment = hostingEnvironment;
-        }
-
         public IActionResult Index()
-        { 
+        {
+           // AskCaro.MachineLearning.Program.train();
+            return View();
+        }
+        public IActionResult WhatIs()
+        {
+            return View();
+        }
+        public IActionResult Services()
+        {
             return View();
         }
 
+        public IActionResult Process()
+        {
+            return View();
+        }
 
+        public IActionResult FAQ()
+        {
+            return View();
+        }
+
+        public IActionResult AboutCaro()
+        {
+            return View();
+        }
+        public IActionResult Picture()
+        {
+            return View();
+        }
+        public IActionResult Chat()
+        {
+            return View();
+        }
+        public IActionResult SearchAvance()
+        {
+            return View();
+        }
         [HttpPost]
         public JsonResult ReponseCaro(String Question)
         {
-            string shorttag = AskCaro_QuestionnaireAspirateur.AnalyzerText.GetTag(Question);
-            QuestionsIssue issue = new QuestionsIssue() {   Question = shorttag };
-            var test = AskCaro.MachineLearning.Program.BuildModel(AskCaro.MachineLearning.Program.ModelPath, issue);
-            return Json(new { Answer = test.Answer });
+            //QuestionsIssue issue = new QuestionsIssue() { Question = Question};
+            //var test = AskCaro.MachineLearning.Program.BuildModel(AskCaro.MachineLearning.Program.ModelPath, issue);
+            return Json(new { Answer = Question });
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "Process";
+}
+
+<section class="process_area bg_color sec_pad">
+    <div class="container">
+        <div class="features_info">
+            <img class="dot_img" src="data:image/webp;base64,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" alt="" data-pagespeed-url-hash="1081541628" >
+            <div class="row agency_featured_item mt-0 flex-row-reverse">
+                <div class="col-md-6">
+                    <div class="agency_featured_img text-right">
+                        <img src="~/Caro/img/process/process_1.png" alt="" data-pagespeed-url-hash="1599832820" >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="agency_featured_content pr_70 pl_70">
+                        <div class="dot"><span class="dot1"></span><span class="dot2"></span></div>
+                        <img class="number" src="~/Caro/img/home4/icon01.png" alt="" data-pagespeed-url-hash="2324259467" >
+                        <h3>With efficiency to unlock more opportunities</h3>
+                        <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy cras tickety-boo squiffy. Starkers dropped a clanger lurgy is cack excuse my French what a plonker blower.!</p>
+                        <a href="#" class="icon mt_30"><i class="ti-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row agency_featured_item agency_featured_item_two">
+                <div class="col-md-6">
+                    <div class="agency_featured_img text-right">
+                        <img src="~/Caro/img/process/process_2.png" alt="" data-pagespeed-url-hash="1894332741" >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="agency_featured_content pl_100">
+                        <div class="dot"><span class="dot1"></span><span class="dot2"></span></div>
+                        <img class="number" src="~/Caro/img/home4/icon02.png" alt="" data-pagespeed-url-hash="2618759388" >
+                        <h3>Wuth instant data to keep everyone in the know</h3>
+                        <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy cras tickety-boo squiffy. Starkers dropped a clanger lurgy is cack excuse my French what a plonker blower.!</p>
+                        <a href="#" class="icon mt_30"><i class="ti-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row agency_featured_item flex-row-reverse">
+                <div class="col-md-6">
+                    <div class="agency_featured_img text-right">
+                        <img src="~/Caro/img/process/process_3.png" alt="" data-pagespeed-url-hash="2188832662" >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="agency_featured_content pr_70 pl_70">
+                        <div class="dot"><span class="dot1"></span><span class="dot2"></span></div>
+                        <img class="number" src="~/Caro/img/home4/icon3.png" alt="" data-pagespeed-url-hash="862844275" >
+                        <h3>With efficiency to unlock more opportunities</h3>
+                        <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy cras tickety-boo squiffy. Starkers dropped a clanger lurgy is cack excuse my French what a plonker blower.!</p>
+                        <a href="#" class="icon mt_30"><i class="ti-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row agency_featured_item agency_featured_item_two">
+                <div class="col-md-6">
+                    <div class="agency_featured_img text-right">
+                        <img src="~/Caro/img/process/process_4.png" alt="" data-pagespeed-url-hash="2483332583" >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="agency_featured_content pl_100">
+                        <div class="dot"><span class="dot1"></span><span class="dot2"></span></div>
+                        <img class="number" src="~/Caro/img/process/icon_04.png" alt="" data-pagespeed-url-hash="384249629" >
+                        <h3>Wuth instant data to keep everyone in the know</h3>
+                        <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy cras tickety-boo squiffy. Starkers dropped a clanger lurgy is cack excuse my French what a plonker blower.!</p>
+                        <a href="#" class="icon mt_30"><i class="ti-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row agency_featured_item flex-row-reverse">
+                <div class="col-md-6">
+                    <div class="agency_featured_img text-right">
+                        <img src="~/Caro/img/process/process_5.png" alt="" data-pagespeed-url-hash="2777832504" >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="agency_featured_content pr_70 pl_70">
+                        <div class="dot"><span class="dot1"></span><span class="dot2"></span></div>
+                        <img class="number" src="~/Caro/img/process/icon_05.png" alt="" data-pagespeed-url-hash="678749550" >
+                        <h3>With efficiency to unlock more opportunities</h3>
+                        <p>Why I say old chap that is spiffing bodge, blag pardon me buggered mufty Oxford butty bubble and squeak wind up, brown bread the full monty bloke ruddy cras tickety-boo squiffy. Starkers dropped a clanger lurgy is cack excuse my French what a plonker blower.!</p>
+                        <a href="#" class="btn_hover agency_banner_btn mt_30">Get in Touch</a>
+                    </div>
+                </div>
+            </div>
+            <div class="dot middle_dot"><span class="dot1"></span><span class="dot2"></span></div>
+        </div>
+    </div>
+</section>

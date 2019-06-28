@@ -100,9 +100,9 @@ namespace AskCaro.Controllers
 
 
 
-        public IActionResult test()
+        public IActionResult test(int take,int skip)
         {
-            var Questionslist = _dbContext.Conversations;
+            var Questionslist = _dbContext.Conversations.Take(take).Skip(skip);
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("Question");
             dataTable.Columns.Add("Answer");

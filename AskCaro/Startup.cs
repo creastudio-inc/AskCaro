@@ -69,6 +69,10 @@ namespace AskCaro
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "Administrator",
+                    template: "{area}/{controller=Home}/{action=Index}");
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

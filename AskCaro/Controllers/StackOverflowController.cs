@@ -187,7 +187,7 @@ namespace AskCaro.Controllers
 
         public IActionResult train()
         {
-            AskCaro.MachineLearning.Program.train();
+            //AskCaro.MachineLearning.Program.train();
             return View();
         }
         public void CreateCSV(DataTable dataTable, string filePath, string delimiter = ",")

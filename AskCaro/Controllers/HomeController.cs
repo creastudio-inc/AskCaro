@@ -4,9 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AskCaro.Models;
-using AskCaro.MachineLearning.DataStructures;
-using static AskCaro.MachineLearning.Program;
+using AskCaro.Models; 
 
 namespace AskCaro.Controllers
 {

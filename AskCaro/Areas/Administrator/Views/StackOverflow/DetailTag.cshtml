@@ -1,0 +1,53 @@
+﻿@model  AskCaro.Models.TagModel
+@{
+    ViewData["Title"] = "DetailTag";
+}
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <blockquote class="card-bodyquote mb-0">
+                        <p>
+                           @Model.Name
+                        </p>
+                        <footer class="blockquote-footer text-white-50">
+                            @Model.Description
+                        </footer>
+                    </blockquote>
+                </div>
+            </div> <!-- end card-box-->
+        </div> <!-- end col -->
+
+        <div class="col-lg-4">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <blockquote class="card-bodyquote mb-0">
+                        <p>
+                            @(Model.PaginationFound*15) <br />
+                           @Model.TagQuestionModels.Count()
+                        </p>
+                        <footer class="blockquote-footer text-white-50">
+                            Someone famous in <cite title="Source Title">Source Title</cite>
+                        </footer>
+                    </blockquote>
+                </div>
+            </div> <!-- end card-box-->
+        </div> <!-- end col -->
+
+        <div class="col-lg-4">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <blockquote class="card-bodyquote mb-0">
+                        <p>
+                            @(Model.PaginationActuel) <br />
+                            @ViewBag.IsAlive
+                        </p>
+                        <footer class="blockquote-footer text-white-50">
+                            Someone famous in <cite title="Source Title">Source Title</cite>
+                        </footer>
+                    </blockquote>
+                </div>
+            </div> <!-- end card-box-->
+        </div> <!-- end col -->
+    </div>

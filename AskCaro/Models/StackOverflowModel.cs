@@ -20,6 +20,7 @@ namespace AskCaro.Models
         public string HtmlAnswers { get; set; }
         public string SiteClone { get; set; }
         public virtual List<AnswerModel> Answers { get; set; }
+        public virtual ICollection<TagQuestionModel> TagQuestionModels { get; set; }
 
     }
 
@@ -60,8 +61,23 @@ namespace AskCaro.Models
         [Key]
         public Guid TagId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public int PaginationFound { get; set; }
+        public int PaginationActuel { get; set; }
         public string SiteClone { get; set; }
         public DateTime CreaDate { get; set; }
+        public virtual ICollection<TagQuestionModel> TagQuestionModels { get; set; }
+    }
+    [Table("TagsQuestions")]
+    public class TagQuestionModel
+    {
+        [Key]
+        public Guid TagQuestionId { get; set; }
+        public Guid TagId { get; set; }
+        public Guid QuestionId { get; set; }
+        public virtual QuestionModel QuestionModel { get; set; }
+        public virtual TagModel TagModel { get; set; }
+
     }
 
 }

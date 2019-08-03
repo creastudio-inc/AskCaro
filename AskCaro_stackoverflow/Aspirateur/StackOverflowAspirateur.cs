@@ -8,9 +8,9 @@ namespace AskCaro_QuestionnaireAspirateur
 {
     public class StackOverflowAspirateur
     {
-        public List<stackoverflowModel> Start(int i)
+        public List<stackoverflowModel> Start(int i,string tagname)
         {
-            var url = String.Format(URLTags.StackOverflow, "asp.net-mvc-4", "15",i);
+            var url = String.Format(URLTags.StackOverflow, tagname, "15",i);
             var doc = new HtmlWeb().Load(url);
             List<stackoverflowModel> stackoverflow = new List<stackoverflowModel>();
             var summary = doc.DocumentNode.SelectNodes("//div[@class='summary']");

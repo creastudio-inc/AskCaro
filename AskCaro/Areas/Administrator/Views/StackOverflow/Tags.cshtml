@@ -22,7 +22,9 @@
                     {
                         <tr>
                             <td>@item.Name</td> 
-                            <td>edit</td> 
+                            <td>
+                                <a href="@Url.Action("DetailTag",new {id=item.TagId })">voir</a>
+                            </td> 
                         </tr>
 
                     }

@@ -18,6 +18,7 @@ namespace AskCaro.Models
         public string TextDescription { get; set; }
         public string LinkHref { get; set; }
         public string HtmlAnswers { get; set; }
+        public string SiteClone { get; set; }
         public virtual List<AnswerModel> Answers { get; set; }
 
     }
@@ -52,7 +53,15 @@ namespace AskCaro.Models
         public Guid categorieId { get; set; }
         public string Name { get; set; }
         public DateTime CreaDate { get; set; }
-
+    }
+    [Table("Tags")]
+    public class TagModel
+    {
+        [Key]
+        public Guid TagId { get; set; }
+        public string Name { get; set; }
+        public string SiteClone { get; set; }
+        public DateTime CreaDate { get; set; }
     }
 
 }

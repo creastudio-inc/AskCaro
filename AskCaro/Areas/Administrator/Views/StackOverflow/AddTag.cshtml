@@ -3,5 +3,22 @@
     ViewData["Title"] = "AddTag";
 }
 
-<h1>AddTag</h1>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-box">
+                <h4 class="header-title">Input Types</h4> 
+            @using (Html.BeginForm("AddTag", "StackOverflow", FormMethod.Post, new { @class = "form-horizontal" }))
+             {
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="Name">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Name" name="Name" placeholder="Some text value...">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+              }
+
+            </div> <!-- end card-box -->
+        </div><!-- end col -->
+    </div>
 

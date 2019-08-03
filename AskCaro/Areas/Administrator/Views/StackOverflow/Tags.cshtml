@@ -1,7 +1,64 @@
-﻿
+﻿@model List<AskCaro.Models.TagModel>
 @{
     ViewData["Title"] = "Tags";
 }
 
-<h1>Tags</h1>
 
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+
+            <table id="datatable" class="table table-bordered dt-responsive nowrap">
+                <thead>
+                    <tr>
+                        <th>Name</th> 
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td> 
+                            <td>edit</td> 
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div> <!-- end card-box -->
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+@section styles{
+
+    <!-- third party css -->
+    <link href="~/admin/assets/libs/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/admin/assets/libs/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/admin/assets/libs/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/admin/assets/libs/datatables/select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+}
+
+@section scripts{
+
+    <!-- datatable js -->
+    <script src="~/admin/assets/libs/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/responsive.bootstrap4.min.js"></script>
+
+    <script src="~/admin/assets/libs/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/buttons.html5.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/buttons.flash.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/buttons.print.min.js"></script>
+
+    <script src="~/admin/assets/libs/datatables/dataTables.keyTable.min.js"></script>
+    <script src="~/admin/assets/libs/datatables/dataTables.select.min.js"></script>
+
+    <!-- Datatables init -->
+    <script src="~/admin/assets/js/pages/datatables.init.js"></script>
+}

@@ -91,6 +91,28 @@ namespace AskCaro_QuestionnaireAspirateur
             }
 
         }
+        public string GetInnerText(String html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            return doc.DocumentNode.InnerText;
+           
+
+        }
+        public void Analyze(ref String InputText, ref Dictionary<string, int> WordFreq)
+        {
+            string[] Words = InputText.Split(' ');
+
+            for (int i = 0; i < Words.Length; i++)
+            {
+                if (WordFreq.ContainsKey(Words[i]) == false)
+                    WordFreq.Add(Words[i], 1);
+                else
+                {
+                    WordFreq[Words[i]]++;
+                }
+            }
+        }
         public List<string> Getanswers(String link)
         {
             List<string> ans = new List<string>();

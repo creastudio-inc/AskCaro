@@ -1,44 +1,244 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+﻿
+<!doctype html>
+<html lang="en">
 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img\xfavicon.png.pagespeed.ic.WlJ-a2FcKI.png" type="image/x-icon">
+    <title>AskCaro</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Caro/StyleSheet.min.css">
+
+    <!--icon font css-->
+
+    <link rel="stylesheet" href="~/Caro/css/style.css">
+    <link rel="stylesheet" href="~/Caro/css/responsive.css">
 </head>
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div id="preloader">
+        <div id="ctn-preloader" class="ctn-preloader">
+            <div class="animation-preloader">
+                <div class="spinner"></div>
+                <div class="txt-loading">
+                    <span data-text-preloader="A" class="letters-loading">
+                        A
+                    </span>
+                    <span data-text-preloader="S" class="letters-loading">
+                        S
+                    </span>
+                    <span data-text-preloader="K" class="letters-loading">
+                        K
+                    </span>
+                    <span data-text-preloader=" " class="letters-loading">
+
+                    </span>
+                    <span data-text-preloader="C" class="letters-loading">
+                        C
+                    </span>
+                    <span data-text-preloader="A" class="letters-loading">
+                        A
+                    </span>
+                    <span data-text-preloader="R" class="letters-loading">
+                        R
+                    </span>
+                    <span data-text-preloader="O" class="letters-loading">
+                        O
+                    </span>
+                </div>
+                <p class="text-center">Loading</p>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <div class="loader">
+                <div class="row">
+                    <div class="col-3 loader-section section-left">
+                        <div class="bg"></div>
+                    </div>
+                    <div class="col-3 loader-section section-left">
+                        <div class="bg"></div>
+                    </div>
+                    <div class="col-3 loader-section section-right">
+                        <div class="bg"></div>
+                    </div>
+                    <div class="col-3 loader-section section-right">
+                        <div class="bg"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">
+
+    <div class="body_wrapper">
+        <header class="header_area header_area_seven">
+            <div class="header_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="header_top_menu list-unstyled">
+                                <li><a href="@Url.Action("Index","Login")">Sign In</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-lg menu_one">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <img src="~/Caro/img/br_logo.png">
+                    </a>
+
+                </div>
+            </nav>
+        </header>
+        <section class="digital_banner_area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="digital_content">
+                            <h2>Get Some Fresh</h2>
+                            <p>Nice one mufty brown bread James Bond lost the plot chinwag vagabond are you taking the piss morish matie boy bender, spend a penny blower cockup easy.!</p>
+                            <a href="#" class="btn_six slider_btn">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="digital_video_slider owl-carousel owl-loaded owl-drag">
+
+
+                <div class="owl-stage-outer">
+                    <div class="owl-stage" style="transition: all 1s ease 0s; width: 3889px; padding-left: 200px; padding-right: 200px; transform: translate3d(-1163px, 0px, 0px);">
+                        <div class="owl-item cloned" style="width: 551.5px; margin-right: 30px;">
+                            <div class="video_item">
+                                <img src="~/Caro/img/new/xvideo_img_01.png.pagespeed.ic.7x8CnY57Kr.png" alt="" data-pagespeed-url-hash="2975895267">
+                                <a class="popup-youtube video_icon" href="https://www.youtube.com/watch?v=sU3FkzUKHXU"><i class="arrow_triangle-right"></i></a>
+                            </div>
+                        </div><div class="owl-item cloned" style="width: 551.5px; margin-right: 30px;">
+                            <div class="video_item">
+                                <img src="~/Caro/img/new/xvideo_img_02.jpg.pagespeed.ic.JauPYf2RR_.jpeg" alt="" data-pagespeed-url-hash="3270292484">
+                                <a class="popup-youtube video_icon" href="https://www.youtube.com/watch?v=sU3FkzUKHXU"><i class="arrow_triangle-right"></i></a>
+                            </div>
+                        </div><div class="owl-item active center" style="width: 551.5px; margin-right: 30px;">
+                            <div class="video_item">
+                                <img src="~/Caro/img/new/xvideo_img_01.png.pagespeed.ic.7x8CnY57Kr.png" alt="" data-pagespeed-url-hash="2975895267">
+                                <a class="popup-youtube video_icon" href="https://www.youtube.com/watch?v=sU3FkzUKHXU"><i class="arrow_triangle-right"></i></a>
+                            </div>
+                        </div><div class="owl-item" style="width: 551.5px; margin-right: 30px;">
+                            <div class="video_item">
+                                <img src="~/Caro/img/new/xvideo_img_02.jpg.pagespeed.ic.JauPYf2RR_.jpeg" alt="" data-pagespeed-url-hash="3270292484">
+                                <a class="popup-youtube video_icon" href="https://www.youtube.com/watch?v=sU3FkzUKHXU"><i class="arrow_triangle-right"></i></a>
+                            </div>
+                        </div><div class="owl-item cloned" style="width: 551.5px; margin-right: 30px;">
+                            <div class="video_item">
+                                <img src="~/Caro/img/new/xvideo_img_01.png.pagespeed.ic.7x8CnY57Kr.png" alt="" data-pagespeed-url-hash="2975895267">
+                                <a class="popup-youtube video_icon" href="https://www.youtube.com/watch?v=sU3FkzUKHXU"><i class="arrow_triangle-right"></i></a>
+                            </div>
+                        </div><div class="owl-item cloned" style="width: 551.5px; margin-right: 30px;">
+                            <div class="video_item">
+                                <img src="~/Caro/img/new/xvideo_img_02.jpg.pagespeed.ic.JauPYf2RR_.jpeg" alt="" data-pagespeed-url-hash="3270292484">
+                                <a class="popup-youtube video_icon" href="https://www.youtube.com/watch?v=sU3FkzUKHXU"><i class="arrow_triangle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div>
+            </div>
+            <div class="digital_banner_shap"></div>
+            <div class="round_shap one"></div>
+            <div class="round_shap two"></div>
+            <div class="round_shap three"></div>
+        </section>
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+        <section class="s_subscribe_area">
+            <div class="s_shap">
+                <svg class="right_shape" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <defs>
+                        <linearGradient id="PSgrad_5">
+                            <stop offset="0%" stop-color="rgb(103,84,226)" stop-opacity="0.95"></stop>
+                            <stop offset="100%" stop-color="rgb(25,204,230)" stop-opacity="0.95"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#PSgrad_5)" d="M543.941,156.289 L227.889,41.364 C184.251,25.497 136.000,47.975 120.118,91.571 L5.084,407.325 C-10.799,450.921 11.701,499.127 55.339,514.995 L371.391,629.920 C415.029,645.788 463.280,623.309 479.162,579.713 L594.196,263.959 C610.079,220.362 587.579,172.157 543.941,156.289 Z"></path>
+                    <path fill="url(#PSgrad_5)" d="M625.661,120.004 L309.609,5.079 C265.971,-10.790 217.720,11.689 201.838,55.286 L86.804,371.039 C70.921,414.636 93.421,462.842 137.059,478.709 L453.111,593.634 C496.749,609.502 545.000,587.024 560.882,543.427 L675.916,227.673 C691.799,184.077 669.299,135.872 625.661,120.004 Z"></path>
+                </svg>
+                <svg class="bottom_shape" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <defs>
+                        <linearGradient id="PSgrad_6" x1="76.604%" x2="0%" y1="0%" y2="64.279%">
+                            <stop offset="0%" stop-color="rgb(103,84,226)" stop-opacity="0.95"></stop>
+                            <stop offset="100%" stop-color="rgb(25,204,230)" stop-opacity="0.95"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#PSgrad_6)" d="M543.941,156.289 L227.889,41.365 C184.251,25.496 136.000,47.975 120.118,91.572 L5.084,407.325 C-10.799,450.922 11.701,499.127 55.339,514.995 L371.391,629.920 C415.029,645.788 463.280,623.310 479.162,579.713 L594.196,263.959 C610.079,220.362 587.579,172.157 543.941,156.289 Z"></path>
+                    <path fill="url(#PSgrad_6)" d="M625.661,120.004 L309.609,5.078 C265.971,-10.789 217.720,11.689 201.838,55.286 L86.804,371.040 C70.921,414.636 93.421,462.842 137.059,478.709 L453.111,593.634 C496.749,609.502 545.000,587.023 560.882,543.427 L675.916,227.673 C691.799,184.077 669.299,135.871 625.661,120.004 Z"></path>
+                </svg>
+            </div>
+            <div class="container">
+                <div class="sec_title text-center mb_50 wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                    <h2 class="f_p f_size_30 l_height50 f_600 t_color">Newsletter Personalized for You</h2>
+                    <p class="f_400 f_size_18 l_height34">Instant Sign Up. Cancel Anytime. No Credit Card Required</p>
+                </div>
+                <form class="mailchimp wow fadeInUp" data-wow-delay="0.6s" method="post" novalidate="true" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <div class="input-group s_subcribes">
+                        <input type="text" name="EMAIL" class="form-control memail" placeholder="E-Mail Address">
+                        <button class="btn btn-submit" type="submit"><i class="ti-arrow-right"></i></button>
+                    </div>
+                    <p class="mchimp-errmessage" style="display: none;"></p>
+                    <p class="mchimp-sucmessage" style="display: none;"></p>
+                </form>
+            </div>
+        </section>
+        <footer class="footer_area f_bg">
+            <div class="footer_bottom">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-5 col-sm-6">
+                            <p class="mb-0 f_400">Copyright © 2018 Desing by <a href="#">DroitThemes</a></p>
+                        </div>
+                        <div class="col-lg-4 col-md-3 col-sm-6">
+                            <div class="f_social_icon_two text-center">
+                                <a href="#"><i class="ti-facebook"></i></a>
+                                <a href="#"><i class="ti-twitter-alt"></i></a>
+                                <a href="#"><i class="ti-vimeo-alt"></i></a>
+                                <a href="#"><i class="ti-pinterest"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <ul class="list-unstyled f_menu text-right">
+                                <li><a href="#">Terms of Use</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Caro/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Caro/js/propper.js"></script>
+    <script src="~/Caro/js/bootstrap.min.js"></script>
+    <script src="~/Caro/vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+    <script src="~/Caro/vendors/wow/wow.min.js"></script>
+    <script src="~/Caro/vendors/sckroller/jquery.parallax-scroll.js"></script>
+    <script src="~/Caro/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Caro/vendors/nice-select/jquery.nice-select.min.js"></script>
+    <script src="~/Caro/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Caro/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Caro/vendors/magnify-pop/jquery.magnific-popup.min.js"></script>
+    <script src="~/Caro/vendors/circle-progress/circle-progress.js"></script>
+    <script src="~/Caro/vendors/counterup/jquery.counterup.min.js"></script>
+    <script src="~/Caro/vendors/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/Caro/vendors/counterup/appear.js"></script>
+    <script src="~/Caro/vendors/scroll/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Caro/js/plugins.js"></script>
+    <script src="~/Caro/vendors/multiscroll/jquery.easings.min.js"></script>
+    <script src="~/Caro/vendors/multiscroll/multiscroll.responsiveExpand.limited.min.js"></script>
+    <script src="~/Caro/vendors/multiscroll/jquery.multiscroll.extensions.min.js"></script>
+    <script src="~/Caro/js/main.js"></script>
+    @RenderSection("scripts", false)
+
 </body>
+
 </html>

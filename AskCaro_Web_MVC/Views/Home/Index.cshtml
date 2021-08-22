@@ -1,31 +1,98 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@{ 
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<section class="seo_home_area">
+    <div class="home_bubble">
+        <div class="bubble b_one"></div>
+        <div class="bubble b_two"></div>
+        <div class="bubble b_three"></div>
+        <div class="bubble b_four"></div>
+        <div class="bubble b_five"></div>
+        <div class="bubble b_six"></div>
+        <div class="triangle b_seven" data-parallax='{"x": 20, "y": 150}'><img src="~/Caro/img/seo/xtriangle_one.png.pagespeed.ic.W1Sg01AM8I.png" alt=""></div>
+        <div class="triangle b_eight" data-parallax='{"x": 120, "y": -10}'><img src="~/Caro/img/seo/xtriangle_two.png.pagespeed.ic.8yTUEUDnmH.png" alt=""></div>
+        <div class="triangle b_nine"><img src="~/Caro/img\seo\triangle_three.png.pagespeed.ce.pqYABVEJKZ.png" alt=""></div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="banner_top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center seo_banner_content">
+                    <h2 class="wow fadeInUp" data-wow-delay="0.3s">Ask Caro <br>Coding Assistant Robot</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.5s">Here you will find everything you need to <br> know about having our Virtual Assistant.</p>
+                    <a href="@Url.Action("WhatIs")" class="seo_btn seo_btn_one btn_hover">What is a Caro?</a>
+                    <a href="@Url.Action("Services")" class="seo_btn seo_btn_two btn_hover">Services of Caro</a>
+ 
+                    <a  href="@Url.Action("Index","Home",new { Area="Administrator"})"  class="seo_btn seo_btn_two btn_hover">Admin Panel</a>
+  
+                </div>
+            </div>
+            <div class="saas_home_img wow fadeInUp" data-wow-delay="0.8s">
+                <img src="~/Caro/img\seo\ximage.png.pagespeed.ic._o3TgroIvN.png" alt="">
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</section>
+<section class="agency_service_area bg_color">
+    <div class="container custom_container">
+        <h2 class="f_size_30 f_600 t_color3 l_height40 text-center mb_90 wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">Every person you meet knows something <br> learn from them</h2>
+        <div class="row mb_30">
+            <div class="col-lg-3 col-sm-6">
+                <div class="p_service_item agency_service_item pr_70 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                    <div class="icon">
+                        <img src="~/Caro/img/home4/xicon_shape1.png.pagespeed.ic.qq_DDglbdh.webp" alt="" data-pagespeed-url-hash="2522258843" >
+                        <i class="ti-panel"></i>
+                    </div>
+                    <h5 class="f_600 f_p t_color3">Chat</h5>
+                    <p>Intelligent Chat Interfaces can help and find a solution for developers. </p>
+                    <br />
+                    <p class="mb-0"><a href="@Url.Action("Chat")">Read More</a><i class="ti-arrow-right"></i></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="p_service_item agency_service_item pl_20 pr_70 wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                    <div class="icon">
+                        <img src="~/Caro/img/home4/xicon_shape2.png.pagespeed.ic.9M209j0Prg.webp" alt="" data-pagespeed-url-hash="2816758764" >
+                        <i class="ti-layout-grid2"></i>
+                    </div>
+                    <h5 class="f_600 f_p t_color3">Picture Error</h5>
+                    <p>found a solution for you except for uploading picture </p>
+                    <br />
+                    <p class="mb-0"><a href="@Url.Action("Picture")">Read More</a><i class="ti-arrow-right"></i></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="p_service_item agency_service_item pl_20 pr_70 wow fadeInUp" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <div class="icon">
+                        <img src="~/Caro/img/home4/xicon_shape3.png.pagespeed.ic.hTCTqAYqai.webp" alt="" data-pagespeed-url-hash="3111258685" >
+                        <i class="ti-gallery"></i>
+                    </div>
+                    <h5 class="f_600 f_p t_color3">Search Avance</h5>
+                    <p>a search interface can save you time finding what you want </p>
+                    <br />
+                    <p class="mb-0"><a href="@Url.Action("SearchAvance")">Read More</a><i class="ti-arrow-right"></i></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="p_service_item agency_service_item pl_50 wow fadeInUp" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInUp;">
+                    <div class="icon">
+                        <img src="~/Caro/img/home4/icon_shape4.png" alt="" data-pagespeed-url-hash="3405758606" >
+                        <i class="ti-fullscreen"></i>
+                    </div>
+                    <h5 class="f_600 f_p t_color3">About Caro</h5>
+                    <p>intelligent interface, increase the experience of your employees with our virtual assistant.</p>
+                    <br />
+                    <p class="mb-0"><a href="@Url.Action("AboutCaro")">Read More</a><i class="ti-arrow-right"></i></p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section> 
+<section class="action_area_three sec_pad">
+    <div class="curved"></div>
+    <div class="container">
+        <div class="seo_call_action_text">
+            <h2>Ready to get started?<br> lt's fast, free and very easy!</h2>
+            <a href="@Url.Action("Chat")" class="about_btn">Ask Caro</a>
+        </div>
+    </div>
+</section>

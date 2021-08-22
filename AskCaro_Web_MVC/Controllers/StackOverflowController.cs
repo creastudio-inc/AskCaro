@@ -9,21 +9,25 @@ using System.Web.Mvc;
 
 namespace AskCaro_Web_MVC.Controllers
 {
+  
     public class StackOverflowController : Controller
     {
 
         public ApplicationDbContext _dbContext = new ApplicationDbContext();
 
+        public ActionResult index()
+        {
+            return Json(new { Question = _dbContext.Questions.Count(), Answer = _dbContext.Answers.Count() });
+        }
 
 
-
-        public ActionResult Index()
+        public ActionResult run()
         {
             AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur main = new AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur();
             string countt = main.GetLastPageNumbers();
             int count = int.Parse(countt);
             int simillar = 0;
-            for (int i = 317; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 var item = main.Start(i);
                 foreach (var x in item)
@@ -36,6 +40,10 @@ namespace AskCaro_Web_MVC.Controllers
                     questionModel.LinkHref = x.hreflink;
                     questionModel.TextDescription = main.GetDescrip(x.hreflink);
                     questionModel.HtmlDescription = main.GetDescripHtml(x.hreflink);
+                    var html = AskCaro_Web_MVC.Tools.WordsAnalyzer.RemoveTag(questionModel.HtmlDescription, "<code", "</code>");
+                    html = AskCaro_Web_MVC.Tools.WordsAnalyzer.RemoveTag(html, "(", ")");
+                    string InnerText = main.GetInnerText(html).Replace("\r", "").Replace("\n","");
+                    questionModel.Tag = AskCaro_Web_MVC.Tools.WordsAnalyzer.StringWords2Remove(x.title).Replace("-", " ") + " "+ AskCaro_Web_MVC.Tools.WordsAnalyzer.StringWords2Remove(InnerText);
                     questionModel.Answers = new List<AnswerModel>();
                     foreach (var answers in main.GetBestanswers(x.hreflink))
                     {
@@ -57,24 +65,32 @@ namespace AskCaro_Web_MVC.Controllers
 
                      _dbContext.Questions.Add(questionModel);
                     var result = _dbContext.SaveChanges();
-                    //AskCaro_QuestionnaireAspirateur.GoogleAspirateur googleAspirateur = new AskCaro_QuestionnaireAspirateur.GoogleAspirateur();
-                    //var listgoogle = googleAspirateur.Start(x.title, x.hreflink, "stackoverflow.com");
-                    //foreach (var google in listgoogle)
-                    //{
-                    //    QuestionModel questionModelSimilar = new QuestionModel();
-                    //    questionModelSimilar.Title = google.Title;
-                    //    questionModelSimilar.Similar = simillar;
-                    //    questionModelSimilar.LinkHref = google.hreflink;
-                    //    questionModelSimilar.TextDescription = main.GetDescrip(google.hreflink);
-                    //    questionModelSimilar.HtmlDescription = main.GetDescrip(google.hreflink);
-                    //    questionModelSimilar.HtmlAnswers = questionModel.HtmlAnswers;
-                    //    questionModels.Add(questionModelSimilar);
-                    //}
+                    AskCaro_QuestionnaireAspirateur.GoogleAspirateur googleAspirateur = new AskCaro_QuestionnaireAspirateur.GoogleAspirateur();
+                    var listgoogle = googleAspirateur.Start(x.title, x.hreflink, "stackoverflow.com");
+                    foreach (var google in listgoogle)
+                    {
+                        if (google.Title != questionModel.Title)
+                        {
+                            QuestionModel questionModelSimilar = new QuestionModel();
+                            questionModelSimilar.Title = google.Title;
+                            questionModelSimilar.Similar = simillar;
+                            questionModelSimilar.LinkHref = google.hreflink;
+                            questionModelSimilar.TextDescription = main.GetDescrip(google.hreflink);
+                            questionModelSimilar.HtmlDescription = main.GetDescrip(google.hreflink);
+                            var htmlgoogle = AskCaro_Web_MVC.Tools.WordsAnalyzer.RemoveTag(questionModelSimilar.HtmlDescription, "<code", "</code>");
+                            htmlgoogle = AskCaro_Web_MVC.Tools.WordsAnalyzer.RemoveTag(htmlgoogle, "(", ")");
+                            string InnerTextgoogle = main.GetInnerText(htmlgoogle).Replace("\r", "").Replace("\n", "");
+                            questionModel.Tag = AskCaro_Web_MVC.Tools.WordsAnalyzer.StringWords2Remove(google.Title).Replace("-", " ") + " " + AskCaro_Web_MVC.Tools.WordsAnalyzer.StringWords2Remove(InnerTextgoogle);
+                            questionModelSimilar.HtmlAnswers = questionModel.HtmlAnswers;
+                            questionModels.Add(questionModelSimilar);
+                        }
+                       
+                    }
                     simillar++;
-                    //if (simillar % 40 == 0)
-                    //{
-                    //    System.Threading.Thread.Sleep(10000);
-                    //} 
+                    if (simillar % 40 == 0)
+                    {
+                        System.Threading.Thread.Sleep(10000);
+                    }
                     System.Threading.Thread.Sleep(1000);
                 }
             }

@@ -20,7 +20,7 @@ namespace AskCaro_Web_MVC.Models
         public string TextDescription { get; set; }
         public string LinkHref { get; set; }
         public string HtmlAnswers { get; set; }
-        public string SiteClone { get; set; }
+        public string Tag { get; set; }
         public virtual List<AnswerModel> Answers { get; set; }
 
     }

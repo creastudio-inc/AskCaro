@@ -15,9 +15,9 @@ namespace AskCaro_Web_MVC.Controllers
 
         public ApplicationDbContext _dbContext = new ApplicationDbContext();
 
-        public ActionResult index()
+        public JsonResult index()
         {
-            return Json(new { Question = _dbContext.Questions.Count(), Answer = _dbContext.Answers.Count() });
+            return Json(new { Question = _dbContext.Questions.Count(), Answer = _dbContext.Answers.Count() } , JsonRequestBehavior.AllowGet);
         }
 
 

@@ -63,10 +63,10 @@ namespace AskCaro_Web_MVC.Controllers
             var closeNeighbors = from h in _dbContext.Questions.AsEnumerable() // bring into memory
                                                                                // query continued below as linq-to-objects
 
-                                 let score = (0.15 * LevenshteinDistance.Calculate(text, h.Tag) + 0.35 * LevenshteinDistance.Calculate(text.ToLower(), h.Tag.ToLower())) / Math.Max(text.Length, h.Tag.Length)
-                                 //let lD = Tools.Class1.LevenshteinDistance(target, h.Tag)
-                                 //let length = Math.Max(h.Tag.Length, target.Length)
-                                 //let score = 1.0 - (double)lD / length 
+                                 //let score = (0.15 * LevenshteinDistance.Calculate(text, h.Tag) + 0.35 * LevenshteinDistance.Calculate(text.ToLower(), h.Tag.ToLower())) / Math.Max(text.Length, h.Tag.Length)
+                                 let lD = Tools.Class1.LevenshteinDistance(target, h.Tag)
+                                 let length = Math.Max(h.Tag.Length, target.Length)
+                                 let score = 1.0 - (double)lD / length
                                  where score > 0.25
                                  select new { h, score };
             var listttt = closeNeighbors.OrderByDescending(x => x.score).First();

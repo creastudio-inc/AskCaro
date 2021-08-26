@@ -45,7 +45,7 @@ namespace AskCaro_QuestionnaireAspirateur
         {
             try
             {
-                var doc = new HtmlWeb().Load("https://stackoverflow.com/questions/tagged/asp.net-mvc?sort=votes");
+                var doc = new HtmlWeb().Load("https://stackoverflow.com/questions/tagged/asp.net-mvc-4?tab=Votes");
                 var allhref = doc.DocumentNode.SelectNodes("//div[@class='s-pagination pager fl']//a");
                     return allhref[allhref.Count - 2].InnerText;
             }

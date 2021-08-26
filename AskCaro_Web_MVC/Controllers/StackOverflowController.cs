@@ -36,6 +36,11 @@ namespace AskCaro_Web_MVC.Controllers
 
                     QuestionModel questionModel = new QuestionModel();
                      questionModel.Title = x.title;
+                    var checkDb = _dbContext.Questions.Where(y => y.Title == x.title).FirstOrDefault();
+                    if (checkDb == null)
+                    {
+
+                    
                     questionModel.Similar = simillar;
                     questionModel.LinkHref = x.hreflink;
                     questionModel.TextDescription = main.GetDescrip(x.hreflink);
@@ -92,6 +97,7 @@ namespace AskCaro_Web_MVC.Controllers
                         System.Threading.Thread.Sleep(10000);
                     }
                     System.Threading.Thread.Sleep(1000);
+                    }
                 }
             }
             return View();

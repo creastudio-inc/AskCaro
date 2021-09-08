@@ -54,23 +54,31 @@ namespace AskCaro_Web_MVC.Controllers
         [HttpPost]
         public JsonResult ReponseCaro(String Question)
         {
-            AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur main = new AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur();
+            try
+            {
+                AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur main = new AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur();
 
-            var target = Question;
-            var text = AskCaro_Web_MVC.Tools.WordsAnalyzer.StringWords2Remove(target);
-            var targetHS = text.Split(' ').ToHashSet();
+                var target = Question;
+                var text = AskCaro_Web_MVC.Tools.WordsAnalyzer.StringWords2Remove(target);
+                var targetHS = text.Split(' ').ToHashSet();
 
-            var closeNeighbors = from h in _dbContext.Questions.AsEnumerable() // bring into memory
-                                                                               // query continued below as linq-to-objects
+                var closeNeighbors = from h in _dbContext.Questions.AsEnumerable() // bring into memory
+                                                                                   // query continued below as linq-to-objects
 
-                                 //let score = (0.15 * LevenshteinDistance.Calculate(text, h.Tag) + 0.35 * LevenshteinDistance.Calculate(text.ToLower(), h.Tag.ToLower())) / Math.Max(text.Length, h.Tag.Length)
-                                 let lD = Tools.Class1.LevenshteinDistance(target, h.Tag)
-                                 let length = Math.Max(h.Tag.Length, target.Length)
-                                 let score = 1.0 - (double)lD / length
-                                 where score > 0.25
-                                 select new { h, score };
-            var listttt = closeNeighbors.OrderByDescending(x => x.score).First();
-            return Json(new { Answer = listttt.h.HtmlAnswers });
+                                         //let score = (0.15 * LevenshteinDistance.Calculate(text, h.Tag) + 0.35 * LevenshteinDistance.Calculate(text.ToLower(), h.Tag.ToLower())) / Math.Max(text.Length, h.Tag.Length)
+                                     let lD = Tools.Class1.LevenshteinDistance(target, h.Tag)
+                                     let length = Math.Max(h.Tag.Length, target.Length)
+                                     let score = 1.0 - (double)lD / length
+                                     where score > 0.25
+                                     select new { h, score };
+                var listttt = closeNeighbors.OrderByDescending(x => x.score).First();
+                return Json(new { Answer = listttt.h.HtmlAnswers, LinkHref = listttt.h.LinkHref });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { Answer = "Sorry i can help for this question.<br /> I am trying to learning more to give a perfect answer in future" });
+            }
+
         }
 
         public ActionResult Privacy()

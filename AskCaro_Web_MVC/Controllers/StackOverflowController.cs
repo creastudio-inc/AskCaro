@@ -21,15 +21,15 @@ namespace AskCaro_Web_MVC.Controllers
         }
 
 
-        public ActionResult run()
+        public ActionResult run(string tag)
         {
             AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur main = new AskCaro_QuestionnaireAspirateur.StackOverflowAspirateur();
-            string countt = main.GetLastPageNumbers();
+            string countt = main.GetLastPageNumbers(tag);
             int count = int.Parse(countt);
             int simillar = 0;
             for (int i = 0; i < count; i++)
             {
-                var item = main.Start(i);
+                var item = main.Start(i,tag);
                 foreach (var x in item)
                 {
                     List<QuestionModel> questionModels = new List<QuestionModel>();

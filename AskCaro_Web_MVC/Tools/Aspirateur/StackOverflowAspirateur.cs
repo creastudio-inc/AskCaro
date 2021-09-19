@@ -8,9 +8,9 @@ namespace AskCaro_QuestionnaireAspirateur
 {
     public class StackOverflowAspirateur
     {
-        public List<stackoverflowModel> Start(int i)
+        public List<stackoverflowModel> Start(int i,string tag)
         {
-            var url = String.Format(URLTags.StackOverflow, "asp.net-mvc-4", "15",i);
+            var url = String.Format(URLTags.StackOverflow, tag, "1",i);
             var doc = new HtmlWeb().Load(url);
             List<stackoverflowModel> stackoverflow = new List<stackoverflowModel>();
             var summary = doc.DocumentNode.SelectNodes("//div[@class='summary']");
@@ -41,11 +41,11 @@ namespace AskCaro_QuestionnaireAspirateur
             return stackoverflow;
         }
 
-        public string GetLastPageNumbers()
+        public string GetLastPageNumbers(string tag)
         {
             try
             {
-                var doc = new HtmlWeb().Load("https://stackoverflow.com/questions/tagged/asp.net-mvc-4?tab=Votes");
+                var doc = new HtmlWeb().Load("https://stackoverflow.com/questions/tagged/"+ tag + "?tab=Votes");
                 var allhref = doc.DocumentNode.SelectNodes("//div[@class='s-pagination pager fl']//a");
                     return allhref[allhref.Count - 2].InnerText;
             }

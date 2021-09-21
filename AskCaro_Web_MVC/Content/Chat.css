@@ -2,7 +2,7 @@
     font-family: "Roboto", sans-serif;
     height: 100%;
     margin: 0px;
-    overflow: hidden;
+    overflow-x: hidden;
     padding: 0px;
     width: 100%;
 }
@@ -23,7 +23,7 @@
 #chat-wrapper {
     background-color: white;
     height: 100%;
-    overflow: hidden;
+    
     width: 100%;
 }
 
@@ -99,7 +99,7 @@
         backface-visibility: hidden;
         height: 100%;
         left: 0px;
-        overflow: hidden;
+        
         position: absolute;
         top: 0px;
         user-select: none;
@@ -141,7 +141,7 @@
         height: 100%;
         left: 0px;
         min-width: 600px;
-        overflow: hidden;
+        
         position: absolute;
         top: 0px;
         width: 100%;
@@ -167,7 +167,7 @@
                 box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
                 height: 50px;
                 line-height: 50px;
-                overflow: hidden;
+                
                 width: 500px;
             }
 
@@ -224,7 +224,7 @@
             bottom: 0px;
             height: 100%;
             left: 0px;
-            overflow: hidden;
+            
             position: absolute;
             width: 100%;
             z-index: 1;
@@ -235,7 +235,7 @@
                 left: 0px;
                 min-height: 70px;
                 margin-bottom: 70px;
-                overflow: hidden;
+                
                 padding: 20px 20px 0px 20px;
                 width: calc(100% - 40px);
             }

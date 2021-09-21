@@ -76,7 +76,7 @@ namespace AskCaro_Web_MVC.Controllers
             }
             catch(Exception ex)
             {
-                return Json(new { Answer = "Sorry i can help for this question.<br /> I am trying to learning more to give a perfect answer in future" });
+                return Json(new { Answer = "Sorry i can help for this question. I am trying to learning more to give a perfect answer in future" });
             }
 
         }
